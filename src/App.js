@@ -75,30 +75,6 @@ class App extends Component {
       })
   }
 
-  createCookSession = (orderInfo, potId) => {
-    let formData = {
-      order: orderInfo,
-      pot_id: potId
-    }
-
-    let configObj = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify(formData)
-    }
-
-    fetch(COOK_SESSIONS_URL, configObj)
-      .then(res => res.json())
-      .then(cookSession => {
-        console.log(cookSession);
-      })
-      .catch(error => {
-        console.log(error.message);
-      })
-  }
 
   deleteCookSession = (sessionId) => {
     fetch(`${COOK_SESSIONS_URL}/${sessionId}`, { method: "DELETE" })

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Pot from '../components/Pot';
-
+const BASE_URL = "http://localhost:3000/";
+const COOK_SESSIONS_URL = BASE_URL + "cook_sessions";
 const DEFAULT_STATE = {
   pots: null,
   selectedOrder: null,
@@ -34,8 +35,37 @@ class Kitchen extends Component {
     })
   }
 
+  createCookSession = (orderInfo, potId) => {
+    let formData = {
+      order: orderInfo,
+      pot_id: potId
+    }
+
+    let configObj = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(formData)
+    }
+
+    fetch(COOK_SESSIONS_URL, configObj)
+      .then(res => res.json())
+      .then(cookSession => {
+        fetch("http://localhost:3000/pots")
+          .then(res => res.json())
+          .then(pots => {
+            this.setState({ pots })
+          })
+      })
+      .catch(error => {
+        console.log(error.message);
+      })
+  }
+
   handleStartCookClick = () => {
-    this.props.createCookSession(this.state.selectedOrder, 1); // hardcoded pot 1
+    this.createCookSession(this.state.selectedOrder, 1); // hardcoded pot 1
     this.setState({ selectedOrder: null });
   }
 
@@ -55,6 +85,7 @@ class Kitchen extends Component {
     console.log("selectCookSession(session), session is: ", session)
     this.setState({
       selectedCookSession: session,
+      requiredIngredients: session.required_ingredients,
       selectedIngredients: []
     });
 
@@ -73,8 +104,9 @@ class Kitchen extends Component {
     const selIngs = this.state.selectedIngredients;
     const matching = selIngs.filter(ing => reqIngs.includes(ing))
     console.log("reqIngs, selIngs, matching", reqIngs, selIngs, matching);
-    if (matching.length === selIngs.length && reqIngs.length > 0) {
-      this.props.completeCookSession(this.state.selectedCookSession.id)
+    if (matching.length === reqIngs.length && selIngs.length > 0) {
+      this.props.completeCookSession(this.state.selectedCookSession.id);
+      this.setState(DEFAULT_STATE);
     }
   }
 
