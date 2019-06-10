@@ -101,6 +101,11 @@ class App extends Component {
     });
   }
 
+  serveOrderToTable = (order) => {
+    const filtered = this.state.orders.filter(odr => odr.id !== order.id);
+    this.setState({ orders: [...filtered, order] });
+  }
+
   render() {
     // console.log("App state: ", this.state);
     return (
@@ -108,7 +113,7 @@ class App extends Component {
         <Navbar />
         <Switch>
           {/*<Route path="/main" render={routerProps => <MainContainer {...routerProps} tables={this.state.tables} /> } /> */}
-          <Route path="/table" render={routerProps => <Table {...routerProps} table={this.state.table} recipes={this.state.recipes} placeOrder={this.placeOrder}/>} />
+          <Route path="/table" render={routerProps => <Table {...routerProps} table={this.state.table} recipes={this.state.recipes} placeOrder={this.placeOrder} serveOrderToTable={this.serveOrderToTable}/>} />
           <Route
             path="/kitchen"
             render={ routerProps =>

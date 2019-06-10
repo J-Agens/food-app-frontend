@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { ActionCableConsumer } from 'react-actioncable-provider';
 
 class Table extends Component {
 
@@ -28,37 +29,46 @@ class Table extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <h3>Table 1</h3>
-        </div>
-        <div className="row">
-          <div className="col-3" id="menu">
-            <p>Menu</p>
-            <ul>
-            { this.props.recipes ? this.generateMenu() : null }
-            </ul>
+      <Fragment>
+        <ActionCableConsumer
+          channel={{channel: "TablesChannel"}}
+          onReceived={(order) => {
+            console.log("order was served");
+            this.props.serveOrderToTable(order);
+          }}
+        />
+        <div className="container">
+          <div className="row">
+            <h3>Table 1</h3>
           </div>
-          <div className="col-9">
-            <div className="container">
-              <div className="row">
-                <div className="col-12" id="orders-served">
-                Orders Served
-                { this.props.table ? this.generateServedOrders() : null }
+          <div className="row">
+            <div className="col-3" id="menu">
+              <p>Menu</p>
+              <ul>
+              { this.props.recipes ? this.generateMenu() : null }
+              </ul>
+            </div>
+            <div className="col-9">
+              <div className="container">
+                <div className="row">
+                  <div className="col-12" id="orders-served">
+                  Orders Served
+                  { this.props.table ? this.generateServedOrders() : null }
+                  </div>
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-12" id="orders-placed">
-                <p>Orders Placed</p>
-                <ul>
-                { this.props.table ? this.generatePlacedOrders() : null }
-                </ul>
+                <div className="row">
+                  <div className="col-12" id="orders-placed">
+                  <p>Orders Placed</p>
+                  <ul>
+                  { this.props.table ? this.generatePlacedOrders() : null }
+                  </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </Fragment>
     )
   }
 }
