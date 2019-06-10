@@ -31,7 +31,7 @@ class Kitchen extends Component {
       return !order.served
     })
     return placedOrders.map(order => {
-      return <li draggable={true} onClick={() => this.handleOrderSelection(order)} key={order.id}>{order.item_name} - {order.customer} - Table #{order.table_id}</li>
+      return <li onClick={() => this.handleOrderSelection(order)} key={order.id}>{order.item_name} - {order.customer} - Table #{order.table_id}</li>
     })
   }
 
@@ -64,6 +64,11 @@ class Kitchen extends Component {
       })
   }
 
+  deleteCookSession = (sessionId) => {
+    fetch(`${COOK_SESSIONS_URL}/${sessionId}`, { method: "DELETE" })
+    this.setState(DEFAULT_STATE);
+  }
+
   handleStartCookClick = () => {
     this.createCookSession(this.state.selectedOrder, 1); // hardcoded pot 1
     this.setState({ selectedOrder: null });
@@ -71,7 +76,7 @@ class Kitchen extends Component {
 
   renderPots = () => {
     return this.state.pots.map(pot => {
-      return <Pot key={pot.id} pot={pot} selectCookSession={this.selectCookSession} selectedIngredients={this.selectedIngredients} deleteCookSession={this.props.deleteCookSession}/>
+      return <Pot key={pot.id} pot={pot} selectCookSession={this.selectCookSession} selectedIngredients={this.selectedIngredients} deleteCookSession={this.deleteCookSession}/>
     })
   }
 
@@ -92,11 +97,15 @@ class Kitchen extends Component {
   }
 
   addIngToCookSession = (ing) => {
-    this.setState(prevState => {
-      return {
-        selectedIngredients: [...prevState.selectedIngredients, ing]
-      }
-    });
+    if (this.state.requiredIngredients.includes(ing)) {
+      this.setState(prevState => {
+        return {
+          selectedIngredients: [...prevState.selectedIngredients, ing]
+        }
+      });
+    } else {
+      alert("Wrong ingredient!")
+    }
   }
 
   checkForSessionCompletion = () => {
@@ -107,6 +116,7 @@ class Kitchen extends Component {
     if (matching.length === reqIngs.length && selIngs.length > 0) {
       this.props.completeCookSession(this.state.selectedCookSession.id);
       this.setState(DEFAULT_STATE);
+      alert("Order Complete");
     }
   }
 

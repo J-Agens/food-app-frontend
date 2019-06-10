@@ -75,11 +75,6 @@ class App extends Component {
       })
   }
 
-
-  deleteCookSession = (sessionId) => {
-    fetch(`${COOK_SESSIONS_URL}/${sessionId}`, { method: "DELETE" })
-  }
-
   completeCookSession = (sessionId) => {
     let formData = {
       id: sessionId,
@@ -111,8 +106,6 @@ class App extends Component {
             render={ routerProps =>
                 <Kitchen {...routerProps}
                 orders={this.state.orders}
-                createCookSession={this.createCookSession}
-                deleteCookSession={this.deleteCookSession}
                 completeCookSession={this.completeCookSession}
               />
             } />
