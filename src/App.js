@@ -66,10 +66,10 @@ class App extends Component {
     };
 
     fetch(ORDERS_URL, configObj)
-      .then(res => res.json())
-      .then(order => {
-        console.log(order);
-      })
+      // .then(res => res.json())
+      // .then(order => {
+      //   console.log(order);
+      // })
       .catch(error => {
         console.log(error.message);
       })
@@ -93,6 +93,14 @@ class App extends Component {
     fetch(`${COOK_SESSIONS_URL}/${sessionId}`, configObj)
   }
 
+  postOrderToBoard = (order) => {
+    this.setState(prevState => {
+      return {
+        orders: [...prevState.orders, order]
+      }
+    });
+  }
+
   render() {
     // console.log("App state: ", this.state);
     return (
@@ -107,6 +115,7 @@ class App extends Component {
                 <Kitchen {...routerProps}
                 orders={this.state.orders}
                 completeCookSession={this.completeCookSession}
+                postOrderToBoard={this.postOrderToBoard}
               />
             } />
           <Route exact path="/" component={Home} />

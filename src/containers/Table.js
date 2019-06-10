@@ -23,7 +23,6 @@ class Table extends Component {
   }
 
   handleClick = (e) => {
-    console.log(e.target.textContent);
     this.props.placeOrder(e.target.textContent);
   }
 
