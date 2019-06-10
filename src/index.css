@@ -53,7 +53,7 @@ code {
   background-color: #969696;
   color: white;
   min-height: 75px;
-  margin-top: -40px;
+  margin: -40px 10px 0 5px;
 }
 
 .add-ing {

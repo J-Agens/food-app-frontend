@@ -35,7 +35,7 @@ class Kitchen extends Component {
   }
 
   handleStartCookClick = () => {
-    this.props.createCookSession(this.state.selectedOrder, 1);
+    this.props.createCookSession(this.state.selectedOrder, 1); // hardcoded pot 1
     this.setState({ selectedOrder: null });
   }
 
@@ -52,11 +52,12 @@ class Kitchen extends Component {
   }
 
   selectCookSession = (session) => {
+    console.log("selectCookSession(session), session is: ", session)
     this.setState({
       selectedCookSession: session,
-      requiredIngredients: session["required_ingredients"],
       selectedIngredients: []
-    })
+    });
+
   }
 
   addIngToCookSession = (ing) => {
@@ -71,7 +72,8 @@ class Kitchen extends Component {
     const reqIngs = this.state.requiredIngredients;
     const selIngs = this.state.selectedIngredients;
     const matching = selIngs.filter(ing => reqIngs.includes(ing))
-    if (matching.length === selIngs.length && selIngs.length === reqIngs.length) {
+    console.log("reqIngs, selIngs, matching", reqIngs, selIngs, matching);
+    if (matching.length === selIngs.length && reqIngs.length > 0) {
       this.props.completeCookSession(this.state.selectedCookSession.id)
     }
   }

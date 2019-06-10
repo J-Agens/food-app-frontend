@@ -34,7 +34,6 @@ class App extends Component {
           ordersData.push(table.orders[i]);
         }
       });
-      console.log("ordersData: ", ordersData);
       this.setState({
         table: tablesData[0],
         orders: ordersData
@@ -124,7 +123,7 @@ class App extends Component {
   }
 
   render() {
-    console.log("App state: ", this.state);
+    // console.log("App state: ", this.state);
     return (
       <React.Fragment>
         <Navbar />
