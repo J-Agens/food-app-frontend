@@ -11,3 +11,57 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 } */
+#menu {
+  height: 600px;
+  background-color: #dbdbdb;
+}
+
+#orders-placed {
+  margin-top: 5px;
+  height: 300px;
+  background-color: #dbdbdb;
+}
+
+#orders-served {
+  height: 300px;
+  background-color: #dbdbdb;
+}
+
+#shelf {
+  height: 600px;
+  background-color: #dbdbdb;
+}
+
+#order-board {
+  height: 600px;
+  background-color: #dbdbdb;
+  margin-left: 5px;
+}
+
+#stove {
+  height: 100px;
+  background-color: #dbdbdb;
+  margin-top: 5px;
+}
+
+.menu-item:hover {
+  color: green;
+  cursor: pointer;
+}
+
+.pot {
+  background-color: #969696;
+  color: white;
+  min-height: 75px;
+  margin-top: -40px;
+}
+
+.add-ing {
+  color: green;
+  background-color: white;
+}
+
+.add-ing:hover {
+  background-color: #dbdbdb;
+  cursor: pointer;
+}
