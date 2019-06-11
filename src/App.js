@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { autoLogin } from './actions/userActions'
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -9,6 +11,8 @@ import MainContainer from './containers/MainContainer';
 import Kitchen from './containers/Kitchen';
 import Home from './components/Home';
 import Table from './containers/Table';
+import Signup from './components/Signup';
+import Login from './components/Login';
 
 const BASE_URL = "http://localhost:3000/";
 const TABLES_URL = BASE_URL + "tables";
@@ -25,6 +29,26 @@ class App extends Component {
   }
 
   componentDidMount() {
+    // Check for token here
+    const token = localStorage.getItem('token');
+    if (token && !this.props.user) {
+
+      // how can we make this work?
+      // this.props.autoLogin()
+      console.log('should hit this')
+      fetch('http://localhost:4000/api/v1/auto_login', {
+        headers: {
+          // Authorization: `Bearer ${token}`
+          Authorization: `${token}`
+        }
+        // method: 'GET'
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+        })
+    }
+    ///////
     fetch(TABLES_URL)
     .then(res => res.json())
     .then(tablesData => {
@@ -131,9 +155,12 @@ class App extends Component {
   }
 
   render() {
+    console.log("APP STATE: ", this.state);
     console.log("App state.orders: ", this.state.orders);
     console.log("App state table: ", this.state.table);
     return (
+      <div>
+      { !!this.props.user ?
       <React.Fragment>
         <Navbar />
         <Switch>
@@ -162,9 +189,22 @@ class App extends Component {
           <Route exact path="/" component={Home} />
         </Switch>
       </React.Fragment>
+    : <div className="container">
+      <Signup />
+      <Login />
+      </div>
+    }
+  </div> // had to wrap to test login
     );
   }
 
 }
 
-export default App;
+const mapStateToProps = state => {
+  console.log("APP STATE from REDUX: ", state);
+  return {
+    user: state.usersReducer.user
+  }
+}
+
+export default connect(mapStateToProps, { autoLogin })(App);

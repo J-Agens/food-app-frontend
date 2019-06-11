@@ -5,11 +5,15 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { ActionCableProvider } from 'react-actioncable-provider';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Provider } from 'react-redux'
+import store from './store'
 
 ReactDOM.render(
   <ActionCableProvider url={"ws://localhost:3000/cable"}>
     <Router>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </Router>
   </ActionCableProvider>,
   document.getElementById('root')
