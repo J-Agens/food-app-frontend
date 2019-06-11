@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { autoLogin } from './actions/userActions'
+import { login } from './actions/userActions'
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -36,7 +36,7 @@ class App extends Component {
       // how can we make this work?
       // this.props.autoLogin()
       console.log('should hit this')
-      fetch('http://localhost:4000/api/v1/auto_login', {
+      fetch('http://localhost:3000/auto_login', {
         headers: {
           // Authorization: `Bearer ${token}`
           Authorization: `${token}`
@@ -44,8 +44,9 @@ class App extends Component {
         // method: 'GET'
       })
         .then(res => res.json())
-        .then(data => {
-          console.log(data)
+        .then(user => {
+          console.log(user);
+          this.props.login(user);
         })
     }
     ///////
@@ -207,4 +208,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { autoLogin })(App);
+export default connect(mapStateToProps, { login })(App);

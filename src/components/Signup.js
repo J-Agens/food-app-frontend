@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { signup } from '../actions/userActions';
 
 class Signup extends Component {
   state = {
@@ -14,7 +16,21 @@ class Signup extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log("form submitted");
+    let formData = this.state;
+    let configObj = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(formData)
+    };
+
+    fetch("http://localhost:3000/signup", configObj)
+      .then(res => res.json())
+      .then(user => {
+        this.props.signup(user)
+      })
   }
 
   render() {
@@ -28,4 +44,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default connect(null, { signup })(Signup);
