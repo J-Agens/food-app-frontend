@@ -37,6 +37,13 @@ class Table extends Component {
             this.props.serveOrderToTable(order);
           }}
         />
+        <ActionCableConsumer
+          channel={{channel: "OrderBoardChannel"}}
+          onReceived={(order) => {
+            console.log('order was recieved', order);
+            this.props.postOrderToTable(order);
+          }}
+        />
         <div className="container">
           <div className="row">
             <h3>Table 1</h3>

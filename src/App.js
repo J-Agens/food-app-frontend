@@ -101,20 +101,54 @@ class App extends Component {
     });
   }
 
-  serveOrderToTable = (order) => {
+  unpinOrderFromBoard = (order) => {
     const filtered = this.state.orders.filter(odr => odr.id !== order.id);
     console.log("serveOrderToTable => filtered: ", filtered);
     this.setState({ orders: [...filtered, order] });
   }
 
+  postOrderToTable = (order) => {
+    this.setState(prevState => {
+      return {
+        table: {
+          ...prevState.table,
+          orders: [...prevState.table.orders, order]
+        }
+      }
+    })
+  }
+
+  serveOrderToTable = (order) => {
+    this.setState(prevState => {
+      const filtered = prevState.table.orders.filter(ord => ord.id !== order.id);
+      return {
+        table: {
+          ...prevState.table,
+          orders: [...filtered, order]
+        }
+      }
+    })
+  }
+
   render() {
     console.log("App state.orders: ", this.state.orders);
+    console.log("App state table: ", this.state.table);
     return (
       <React.Fragment>
         <Navbar />
         <Switch>
           {/*<Route path="/main" render={routerProps => <MainContainer {...routerProps} tables={this.state.tables} /> } /> */}
-          <Route path="/table" render={routerProps => <Table {...routerProps} table={this.state.table} recipes={this.state.recipes} placeOrder={this.placeOrder} serveOrderToTable={this.serveOrderToTable}/>} />
+          <Route
+            path="/table"
+            render={routerProps =>
+              <Table {...routerProps}
+                table={this.state.table}
+                recipes={this.state.recipes}
+                placeOrder={this.placeOrder}
+                postOrderToTable={this.postOrderToTable}
+                serveOrderToTable={this.serveOrderToTable}
+                />
+            } />
           <Route
             path="/kitchen"
             render={ routerProps =>
@@ -122,6 +156,7 @@ class App extends Component {
                 orders={this.state.orders}
                 completeCookSession={this.completeCookSession}
                 postOrderToBoard={this.postOrderToBoard}
+                unpinOrderFromBoard={this.unpinOrderFromBoard}
               />
             } />
           <Route exact path="/" component={Home} />
