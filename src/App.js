@@ -103,11 +103,12 @@ class App extends Component {
 
   serveOrderToTable = (order) => {
     const filtered = this.state.orders.filter(odr => odr.id !== order.id);
+    console.log("serveOrderToTable => filtered: ", filtered);
     this.setState({ orders: [...filtered, order] });
   }
 
   render() {
-    // console.log("App state: ", this.state);
+    console.log("App state.orders: ", this.state.orders);
     return (
       <React.Fragment>
         <Navbar />

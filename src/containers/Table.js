@@ -4,14 +4,14 @@ import { ActionCableConsumer } from 'react-actioncable-provider';
 class Table extends Component {
 
   generatePlacedOrders = () => {
-    const placedOrders = this.props.table.orders.filter(order => order.served !== true);
+    const placedOrders = this.props.table.orders.filter(order => order.served === false);
     return placedOrders.map(order => {
       return <li key={order.id}>{order.item_name}</li>
     })
   }
 
   generateServedOrders = () => {
-    const servedOrders = this.props.table.orders.filter(order => order.served);
+    const servedOrders = this.props.table.orders.filter(order => order.served === true);
     return servedOrders.map(order => {
       return <li key={order.id}>{order.item_name}</li>
     });
@@ -33,7 +33,7 @@ class Table extends Component {
         <ActionCableConsumer
           channel={{channel: "TablesChannel"}}
           onReceived={(order) => {
-            console.log("order was served");
+            console.log("order was served", order);
             this.props.serveOrderToTable(order);
           }}
         />
