@@ -23,7 +23,7 @@ const COOK_SESSIONS_URL = BASE_URL + "cook_sessions";
 class App extends Component {
 
   state = {
-    table: null, // starting with just one table
+    table: null, // starting with just one table --> not currently in use anymore, should delete
     tables: null,
     orders: null,
     recipes: null
@@ -69,13 +69,20 @@ class App extends Component {
     })
   }
 
-  placeOrder = (itemName) => {
+  // Probably not needed --> delete later
+  sortTables = (tablesArray) => {
+    tablesArray.sort(function(a, b) {
+      return a.id - b.id;
+    });
+  }
+
+  placeOrder = (orderObj) => {
     let formData = {
-      item_name: itemName,
+      item_name: orderObj.itemName,
       user_id: this.props.user.id,
       served: false,
       price: Math.floor(Math.random() * 25 + 5),
-      table_id: 1
+      table_id: orderObj.tableId
     };
 
     let configObj = {
@@ -125,33 +132,55 @@ class App extends Component {
     this.setState({ orders: [...filtered, order] });
   }
 
+  // Delete when done implementing multiple tables
+  // postOrderToTable = (order) => {
+  //   this.setState(prevState => {
+  //     return {
+  //       table: {
+  //         ...prevState.table,
+  //         orders: [...prevState.table.orders, order]
+  //       }
+  //     }
+  //   })
+  // }
+
   postOrderToTable = (order) => {
     this.setState(prevState => {
+      const filtered = prevState.orders.filter(ord => ord.id !== order.id);
       return {
-        table: {
-          ...prevState.table,
-          orders: [...prevState.table.orders, order]
-        }
-      }
-    })
+        orders: [...filtered, order]
+      };
+    });
   }
+
+  // Delete when done implementing multiple tables
+  // serveOrderToTable = (order) => {
+  //   this.setState(prevState => {
+  //     const filtered = prevState.table.orders.filter(ord => ord.id !== order.id);
+  //     return {
+  //       table: {
+  //         ...prevState.table,
+  //         orders: [...filtered, order]
+  //       }
+  //     }
+  //   })
+  // }
 
   serveOrderToTable = (order) => {
     this.setState(prevState => {
-      const filtered = prevState.table.orders.filter(ord => ord.id !== order.id);
+      const filtered = prevState.orders.filter(ord => ord.id !== order.id);
       return {
-        table: {
-          ...prevState.table,
-          orders: [...filtered, order]
-        }
-      }
-    })
+        orders: [...filtered, order]
+      };
+    });
   }
+
 
   render() {
     console.log("APP STATE: ", this.state);
     console.log("App state.orders: ", this.state.orders);
-    console.log("App state table: ", this.state.table);
+    // console.log("App state table: ", this.state.table);
+    console.log("APP state.tables: ", this.state.tables);
     return (
       <div>
       { !!this.props.user ?
@@ -164,6 +193,7 @@ class App extends Component {
             render={routerProps =>
               <Table {...routerProps}
                 table={!!this.state.tables ? this.state.tables[routerProps.match.params.tableId - 1] : null}
+                orders={this.state.orders}
                 recipes={this.state.recipes}
                 placeOrder={this.placeOrder}
                 postOrderToTable={this.postOrderToTable}

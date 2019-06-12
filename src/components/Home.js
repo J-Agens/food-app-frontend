@@ -3,6 +3,7 @@ import Login from './Login';
 import Signup from './Signup';
 
 class Home extends Component {
+
   render() {
     return (
       <div className="row">

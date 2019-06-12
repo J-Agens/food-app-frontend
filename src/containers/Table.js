@@ -3,15 +3,20 @@ import { ActionCableConsumer } from 'react-actioncable-provider';
 
 class Table extends Component {
 
+  // Had to make orders the single source of truth for multiple tables ironically
+  tableOrders = () => {
+    return this.props.orders.filter(order => order.table_id === this.props.table.id);
+  }
+
   generatePlacedOrders = () => {
-    const placedOrders = this.props.table.orders.filter(order => order.served === false);
+    const placedOrders = this.tableOrders().filter(order => order.served === false);
     return placedOrders.map(order => {
       return <li key={order.id}>{order.item_name}</li>
     })
   }
 
   generateServedOrders = () => {
-    const servedOrders = this.props.table.orders.filter(order => order.served === true);
+    const servedOrders = this.tableOrders().filter(order => order.served === true);
     return servedOrders.map(order => {
       return <li key={order.id}>{order.item_name}</li>
     });
@@ -24,12 +29,15 @@ class Table extends Component {
   }
 
   handleClick = (e) => {
-    this.props.placeOrder(e.target.textContent);
+    this.props.placeOrder({
+      itemName: e.target.textContent,
+      tableId: this.props.table.id
+    });
   }
 
   render() {
-    console.log("TABLE PROPS 'MATCH': ", this.props.match);
-    //, table_id: this.props.match.params.tableId
+    console.log("TABLE PROPS: ", this.props);
+    // , table_id: this.props.match.params.tableId
     return (
       <Fragment>
         <ActionCableConsumer
@@ -62,14 +70,14 @@ class Table extends Component {
                 <div className="row">
                   <div className="col-12" id="orders-served">
                   Orders Served
-                  { this.props.table ? this.generateServedOrders() : null }
+                  { this.props.orders ? this.generateServedOrders() : null }
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-12" id="orders-placed">
                   <p>Orders Placed</p>
                   <ul>
-                  { this.props.table ? this.generatePlacedOrders() : null }
+                  { this.props.orders ? this.generatePlacedOrders() : null }
                   </ul>
                   </div>
                 </div>
