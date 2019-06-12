@@ -7,7 +7,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Navbar from './components/Navbar';
-import MainContainer from './containers/MainContainer';
+import TablesList from './containers/TablesList';
 import Kitchen from './containers/Kitchen';
 import Home from './components/Home';
 import Table from './containers/Table';
@@ -24,6 +24,7 @@ class App extends Component {
 
   state = {
     table: null, // starting with just one table
+    tables: null,
     orders: null,
     recipes: null
   }
@@ -31,7 +32,6 @@ class App extends Component {
   componentDidMount() {
     const token = localStorage.getItem('token');
     if (token && !this.props.user) {
-      console.log('should hit this')
       fetch('http://localhost:3000/auto_login', {
         headers: {
           Authorization: `${token}`
@@ -57,6 +57,7 @@ class App extends Component {
       });
       this.setState({
         table: tablesData[0],
+        tables: tablesData,
         orders: ordersData
       });
     })
@@ -155,14 +156,14 @@ class App extends Component {
       <div>
       { !!this.props.user ?
       <React.Fragment>
-        <Navbar />
+        <Navbar tables={this.state.tables}/>
         <Switch>
-          {/*<Route path="/main" render={routerProps => <MainContainer {...routerProps} tables={this.state.tables} /> } /> */}
+          <Route exact path="/tables" render={routerProps => <TablesList {...routerProps} tables={this.state.tables} /> } /> */}
           <Route
-            path="/table"
+            path="/tables/:tableId"
             render={routerProps =>
               <Table {...routerProps}
-                table={this.state.table}
+                table={!!this.state.tables ? this.state.tables[routerProps.match.params.tableId - 1] : null}
                 recipes={this.state.recipes}
                 placeOrder={this.placeOrder}
                 postOrderToTable={this.postOrderToTable}

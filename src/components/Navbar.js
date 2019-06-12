@@ -10,8 +10,8 @@ const NavBar = () => {
   return (
     <div className="navbar">
       <NavLink to="/">Home</NavLink>
-      <NavLink to="/table">Table</NavLink>
-      <NavLink to="/main">Main</NavLink>
+      <NavLink to="/tables">Table</NavLink>
+      <NavLink to="/tables">Tables List</NavLink>
       <NavLink to="/kitchen">Kitchen</NavLink>
       <button onClick={logOut}>Log Out</button>
     </div>

@@ -75,3 +75,8 @@ code {
 .home-form {
   margin-top: 5vh;
 }
+
+.table-card {
+  background-color: #dbdbdb;
+  margin: 5px;
+}

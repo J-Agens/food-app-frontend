@@ -28,7 +28,8 @@ class Table extends Component {
   }
 
   render() {
-    console.log("TABLE PROPS: ", this.props);
+    console.log("TABLE PROPS 'MATCH': ", this.props.match);
+    //, table_id: this.props.match.params.tableId
     return (
       <Fragment>
         <ActionCableConsumer
@@ -47,7 +48,7 @@ class Table extends Component {
         />
         <div className="container">
           <div className="row">
-            <h3>Table 1</h3>
+            <h3>Table {this.props.table ? this.props.table.id : null}</h3>
           </div>
           <div className="row">
             <div className="col-3" id="menu">
