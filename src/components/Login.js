@@ -38,15 +38,19 @@ class Login extends Component {
         //   payload: user
         // });
       })
+    this.setState({ username: "", password: "" })
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input type="text" name="username" value={this.state.username} onChange={this.handleChange} placeholder="username"/>
-        <input type="password" name="password" value={this.state.password} onChange={this.handleChange} placeholder="password"/>
-        <input type="submit" value="Login"/>
-      </form>
+      <div className="home-form">
+        <h3>Login</h3>
+        <form onSubmit={this.handleSubmit} className="form-inline">
+          <input className="form-control" type="text" name="username" value={this.state.username} onChange={this.handleChange} placeholder="username"/>
+          <input className="form-control" type="password" name="password" value={this.state.password} onChange={this.handleChange} placeholder="password"/>
+          <input className="btn btn-secondary" type="submit" value="Login"/>
+        </form>
+      </div>
     );
   }
 }

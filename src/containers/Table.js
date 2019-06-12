@@ -28,6 +28,7 @@ class Table extends Component {
   }
 
   render() {
+    console.log("TABLE PROPS: ", this.props);
     return (
       <Fragment>
         <ActionCableConsumer

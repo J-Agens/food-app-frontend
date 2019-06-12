@@ -29,27 +29,23 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // Check for token here
     const token = localStorage.getItem('token');
     if (token && !this.props.user) {
-
-      // how can we make this work?
-      // this.props.autoLogin()
       console.log('should hit this')
       fetch('http://localhost:3000/auto_login', {
         headers: {
-          // Authorization: `Bearer ${token}`
           Authorization: `${token}`
         }
-        // method: 'GET'
       })
         .then(res => res.json())
         .then(user => {
           console.log(user);
-          this.props.login(user);
+          if (!user.errors) {
+            this.props.login(user);
+          }
         })
     }
-    ///////
+    // Maybe move this to another component
     fetch(TABLES_URL)
     .then(res => res.json())
     .then(tablesData => {
@@ -75,7 +71,7 @@ class App extends Component {
   placeOrder = (itemName) => {
     let formData = {
       item_name: itemName,
-      user_id: 1,
+      user_id: this.props.user.id,
       served: false,
       price: Math.floor(Math.random() * 25 + 5),
       table_id: 1
@@ -91,10 +87,6 @@ class App extends Component {
     };
 
     fetch(ORDERS_URL, configObj)
-      // .then(res => res.json())
-      // .then(order => {
-      //   console.log(order);
-      // })
       .catch(error => {
         console.log(error.message);
       })
@@ -190,9 +182,8 @@ class App extends Component {
           <Route exact path="/" component={Home} />
         </Switch>
       </React.Fragment>
-    : <div className="container">
-      <Signup />
-      <Login />
+    : <div className="container-fluid" id="home-container">
+        <Home />
       </div>
     }
   </div> // had to wrap to test login
