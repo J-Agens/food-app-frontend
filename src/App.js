@@ -69,13 +69,6 @@ class App extends Component {
     })
   }
 
-  // Probably not needed --> delete later
-  sortTables = (tablesArray) => {
-    tablesArray.sort(function(a, b) {
-      return a.id - b.id;
-    });
-  }
-
   placeOrder = (orderObj) => {
     let formData = {
       item_name: orderObj.itemName,
@@ -132,18 +125,6 @@ class App extends Component {
     this.setState({ orders: [...filtered, order] });
   }
 
-  // Delete when done implementing multiple tables
-  // postOrderToTable = (order) => {
-  //   this.setState(prevState => {
-  //     return {
-  //       table: {
-  //         ...prevState.table,
-  //         orders: [...prevState.table.orders, order]
-  //       }
-  //     }
-  //   })
-  // }
-
   postOrderToTable = (order) => {
     this.setState(prevState => {
       const filtered = prevState.orders.filter(ord => ord.id !== order.id);
@@ -152,19 +133,6 @@ class App extends Component {
       };
     });
   }
-
-  // Delete when done implementing multiple tables
-  // serveOrderToTable = (order) => {
-  //   this.setState(prevState => {
-  //     const filtered = prevState.table.orders.filter(ord => ord.id !== order.id);
-  //     return {
-  //       table: {
-  //         ...prevState.table,
-  //         orders: [...filtered, order]
-  //       }
-  //     }
-  //   })
-  // }
 
   serveOrderToTable = (order) => {
     this.setState(prevState => {
@@ -185,7 +153,7 @@ class App extends Component {
       <div>
       { !!this.props.user ?
       <React.Fragment>
-        <Navbar tables={this.state.tables}/>
+        <Navbar />
         <Switch>
           <Route exact path="/tables" render={routerProps => <TablesList {...routerProps} tables={this.state.tables} /> } /> */}
           <Route

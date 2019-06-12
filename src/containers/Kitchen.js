@@ -148,16 +148,16 @@ class Kitchen extends Component {
             <div className="col-2" id="shelf">
               Shelf
               <ul>
-                <li>cheese {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("cheese")}>+</span>: null}</li>
-                <li>beef {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("beef")}>+</span>: null}</li>
-                <li>bread {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("bread")}>+</span>: null}</li>
-                <li>butter {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("butter")}>+</span>: null}</li>
-                <li>tomato sauce {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("tomato sauce")}>+</span>:  null}</li>
-                <li>pasta {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("pasta")}>+</span>: null}</li>
-                <li>dough {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("dough")}>+</span>: null}</li>
-                <li>sausage {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("sausage")}>+</span>: null}</li>
-                <li>beans {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("beans")}>+</span>: null}</li>
-                <li>onions {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("onions")}>+</span>: null}</li>
+                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="100">cheese {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("cheese")}>+</span>: null}</li>
+                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="101">beef {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("beef")}>+</span>: null}</li>
+                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="102">bread {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("bread")}>+</span>: null}</li>
+                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="103">butter {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("butter")}>+</span>: null}</li>
+                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="104">tomato sauce {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("tomato sauce")}>+</span>:  null}</li>
+                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="105">pasta {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("pasta")}>+</span>: null}</li>
+                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="106">dough {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("dough")}>+</span>: null}</li>
+                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="107">sausage {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("sausage")}>+</span>: null}</li>
+                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="108">beans {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("beans")}>+</span>: null}</li>
+                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="109">onions {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("onions")}>+</span>: null}</li>
               </ul>
               <hr />
               Required Ingredients
