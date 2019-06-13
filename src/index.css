@@ -56,6 +56,10 @@ code {
   margin: -40px 10px 0 5px;
 }
 
+.pot-active {
+  background-color: blue;
+}
+
 .add-ing {
   color: green;
   background-color: white;
@@ -70,6 +74,10 @@ code {
   color: green;
   font-size: 0.01em;
   line-height: 1.5em;
+}
+
+.tiny {
+  font-size: 0.001em;
 }
 
 .home-form {

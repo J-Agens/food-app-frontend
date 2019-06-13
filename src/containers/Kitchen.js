@@ -55,10 +55,14 @@ class Kitchen extends Component {
     ev.preventDefault();
   }
 
-  onDrop = (ev) => {
+  onDrop = (ev, potId) => {
     let id = ev.dataTransfer.getData("id");
     console.log("onDrop: ", id);
-    this.addIngToCookSession(id);
+    if (this.state.selectedCookSession.pot_id === potId) {
+      this.addIngToCookSession(id);
+    } else {
+      alert("wrong pot");
+    }
   }
 
   stockShelf = () => {
@@ -93,6 +97,10 @@ class Kitchen extends Component {
     fetch(COOK_SESSIONS_URL, configObj)
       .then(res => res.json())
       .then(cookSession => {
+        console.log("createCookSession: ", cookSession);
+        if (cookSession.error) {
+          alert("NO MORE ROOM ON THE STOVE");
+        }
         fetch("http://localhost:3000/pots")
           .then(res => res.json())
           .then(pots => {
@@ -104,14 +112,18 @@ class Kitchen extends Component {
       })
   }
 
-  deleteCookSession = (sessionId) => {
+  deleteCookSession = (sessionId, potId) => {
     fetch(`${COOK_SESSIONS_URL}/${sessionId}`, { method: "DELETE" })
-    this.setState({
-      pots: null,
-      selectedOrder: null,
-      selectedCookSession: null,
-      selectedIngredients: [],
-      requiredIngredients: []
+    this.setState(prevState => {
+      const newPots = prevState.pots.filter(p => p.id !== potId)
+      console.log("New pots: ", newPots);
+      return {
+        pots: newPots,
+        selectedOrder: null,
+        selectedCookSession: null,
+        selectedIngredients: [],
+        requiredIngredients: []
+      }
     });
   }
 
@@ -120,19 +132,52 @@ class Kitchen extends Component {
     this.setState({ selectedOrder: null });
   }
 
+  // renderPots = () => {
+  //   return this.state.pots.map(pot => {
+  //     return (
+  //       <Pot
+  //         key={pot.id}
+  //         pot={pot}
+  //         onDragOver={this.onDragOver}
+  //         onDrop={this.onDrop}
+  //         selectedCookSession={this.state.selectedCookSession}
+  //         selectCookSession={this.selectCookSession}
+  //         selectedIngredients={this.selectedIngredients}
+  //         deleteCookSession={this.deleteCookSession}/>
+  //     )
+  //   })
+  // }
+
+  // TRY TO IMPLEMENT LATER
   renderPots = () => {
-    return this.state.pots.map(pot => {
+    let potsArr = this.state.pots.map(pot => {
       return (
         <Pot
           key={pot.id}
           pot={pot}
           onDragOver={this.onDragOver}
           onDrop={this.onDrop}
+          selectedCookSession={this.state.selectedCookSession}
           selectCookSession={this.selectCookSession}
           selectedIngredients={this.selectedIngredients}
+          requiredIngredients={this.state.requiredIngredients}
           deleteCookSession={this.deleteCookSession}/>
       )
-    })
+    });
+    const numMissing = (3 - this.state.pots.length);
+    let fakes = [];
+    for (var i = 0; i < numMissing; i++) {
+      fakes.push(<div className="col-2 pot"></div>);
+    }
+    return potsArr.concat(fakes);
+  }
+
+  renderFakePots = () => {
+    return [
+      <div key="a" className="col-2 pot"></div>,
+      <div key="b" className="col-2 pot"></div>,
+      <div key="c" className="col-2 pot"></div>
+    ]
   }
 
   renderRequiredIngredients = () => {
@@ -141,12 +186,12 @@ class Kitchen extends Component {
     });
   }
 
-  selectCookSession = (session) => {
+  selectCookSession = (session, ings) => {
     console.log("selectCookSession(session), session is: ", session)
     this.setState({
       selectedCookSession: session,
       requiredIngredients: session.required_ingredients,
-      selectedIngredients: []
+      selectedIngredients: ings
     });
 
   }
@@ -170,12 +215,15 @@ class Kitchen extends Component {
     console.log("reqIngs, selIngs, matching", reqIngs, selIngs, matching);
     if (matching.length === reqIngs.length && selIngs.length === reqIngs.length) {
       this.props.completeCookSession(this.state.selectedCookSession.id);
-      this.setState({
-        pots: null,
-        selectedOrder: null,
-        selectedCookSession: null,
-        selectedIngredients: [],
-        requiredIngredients: []
+      this.setState(prevState => {
+        const newPots = prevState.pots.filter(p => p.id !== prevState.selectedCookSession.pot_id)
+        return {
+          pots: newPots,
+          selectedOrder: null,
+          selectedCookSession: null,
+          selectedIngredients: [],
+          requiredIngredients: []
+        };
       });
       alert("Order Complete");
     }
@@ -222,11 +270,10 @@ class Kitchen extends Component {
             </div>
           </div>
           <div className="row">
-            {this.state.selectedOrder ? <button className="btn btn-secondary" onClick={this.handleStartCookClick}>Start Cook</button> : null }
             <div className="col-12" id="stove">
-              stove
+              {this.state.selectedOrder ? <button className="btn btn-secondary" onClick={this.handleStartCookClick}>Start Cook</button> : "stove" }
               <div className="row justify-content-center">
-                {this.state.pots ? this.renderPots() : null}
+                {this.state.pots ? this.renderPots() : this.renderFakePots()}
               </div>
             </div>
           </div>
