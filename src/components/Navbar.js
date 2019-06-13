@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { logout } from '../actions/userActions';
+import { LOGOUT } from '../actions/types';
 
 class NavBar extends Component {
 
   logOut = () => {
     localStorage.clear();
+    this.props.dispatch({
+      type: LOGOUT
+    });
   }
 
   render() {
@@ -24,4 +27,4 @@ class NavBar extends Component {
 
 };
 
-export default connect(null, { logout })(NavBar);
+export default connect()(NavBar);
