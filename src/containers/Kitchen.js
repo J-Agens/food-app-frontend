@@ -107,6 +107,7 @@ class Kitchen extends Component {
   deleteCookSession = (sessionId) => {
     fetch(`${COOK_SESSIONS_URL}/${sessionId}`, { method: "DELETE" })
     this.setState({
+      pots: null,
       selectedOrder: null,
       selectedCookSession: null,
       selectedIngredients: [],
@@ -170,6 +171,7 @@ class Kitchen extends Component {
     if (matching.length === reqIngs.length && selIngs.length > 0) {
       this.props.completeCookSession(this.state.selectedCookSession.id);
       this.setState({
+        pots: null,
         selectedOrder: null,
         selectedCookSession: null,
         selectedIngredients: [],
