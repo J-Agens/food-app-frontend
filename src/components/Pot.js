@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 
-const Pot = (props) => {
+class Pot extends Component {
 
+  render() {
+    return (
+      <div className="pot col-2" onDragOver={(e) => this.props.onDragOver(e)} onDrop={(e) => this.props.onDrop(e)}>
 
-  return (
-    <div className="pot col-2" onDragOver={(e) => props.onDragOver(e)} onDrop={(e) => props.onDrop(e)}>
+        <h6>
+        {this.props.pot.cook_session ? this.props.pot.cook_session.recipe_name : null}
+        {this.props.pot.cook_session ? <button onClick={() => this.props.deleteCookSession(this.props.pot.cook_session.id)}>X</button> : null}
+        {this.props.pot.cook_session ? <button className="start" onClick={() => this.props.selectCookSession(this.props.pot.cook_session)}>Start</button> : null}
+        </h6>
+        <p>{ this.props.pot.cook_session ? this.props.pot.cook_session.customer_name : null}</p>
+      </div>
+    )
+  }
 
-      <h6>
-      {props.pot.cook_session ? props.pot.cook_session.recipe_name : null}
-      {props.pot.cook_session ? <button onClick={() => props.deleteCookSession(props.pot.cook_session.id)}>X</button> : null}
-      {props.pot.cook_session ? <button className="start" onClick={() => props.selectCookSession(props.pot.cook_session)}>Start</button> : null}
-      </h6>
-      <p>{ props.pot.cook_session ? props.pot.cook_session.customer_name : null}</p>
-    </div>
-  )
 }
 
 export default Pot;
