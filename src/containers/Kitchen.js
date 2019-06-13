@@ -5,6 +5,7 @@ const BASE_URL = "http://localhost:3000/";
 const COOK_SESSIONS_URL = BASE_URL + "cook_sessions";
 const DEFAULT_STATE = {
   pots: null,
+  shelfIngredients: [],
   selectedOrder: null,
   selectedCookSession: null,
   selectedIngredients: [],
@@ -21,6 +22,14 @@ class Kitchen extends Component {
       .then(pots => {
         this.setState({ pots })
       })
+    fetch("http://localhost:3000/ingredients")
+      .then(res => res.json())
+      .then(ings => {
+        this.setState({ shelfIngredients: ings })
+      })
+      .catch(error => {
+        console.log(error.message);
+      })
   }
 
   handleOrderSelection = (order) => {
@@ -34,6 +43,36 @@ class Kitchen extends Component {
     return placedOrders.map(order => {
       return <li onClick={() => this.handleOrderSelection(order)} key={order.id}>{order.item_name} - {order.customer} - Table #{order.table_id}</li>
     })
+  }
+
+  onDragStart = (ev, id) => {
+    console.log('dragstart:', id);
+    ev.dataTransfer.setData("id", id)
+  }
+
+  onDragOver = (ev) => {
+    console.log("onDragOver running");
+    ev.preventDefault();
+  }
+
+  onDrop = (ev) => {
+    let id = ev.dataTransfer.getData("id");
+    console.log("onDrop: ", id);
+    this.addIngToCookSession(id);
+  }
+
+  stockShelf = () => {
+    return this.state.shelfIngredients.map((ing, idx) => {
+      return (
+        <li key={ing.name}
+          draggable={this.state.selectedCookSession ? "true" : "false"}
+          onDragStart={(e) => this.onDragStart(e, ing.name)}
+          id={idx + 100}
+        >
+            {ing.name}
+        </li>
+      );
+    });
   }
 
   createCookSession = (orderInfo, potId) => {
@@ -67,7 +106,12 @@ class Kitchen extends Component {
 
   deleteCookSession = (sessionId) => {
     fetch(`${COOK_SESSIONS_URL}/${sessionId}`, { method: "DELETE" })
-    this.setState(DEFAULT_STATE);
+    this.setState({
+      selectedOrder: null,
+      selectedCookSession: null,
+      selectedIngredients: [],
+      requiredIngredients: []
+    });
   }
 
   handleStartCookClick = () => {
@@ -77,7 +121,16 @@ class Kitchen extends Component {
 
   renderPots = () => {
     return this.state.pots.map(pot => {
-      return <Pot key={pot.id} pot={pot} selectCookSession={this.selectCookSession} selectedIngredients={this.selectedIngredients} deleteCookSession={this.deleteCookSession}/>
+      return (
+        <Pot
+          key={pot.id}
+          pot={pot}
+          onDragOver={this.onDragOver}
+          onDrop={this.onDrop}
+          selectCookSession={this.selectCookSession}
+          selectedIngredients={this.selectedIngredients}
+          deleteCookSession={this.deleteCookSession}/>
+      )
     })
   }
 
@@ -116,7 +169,12 @@ class Kitchen extends Component {
     console.log("reqIngs, selIngs, matching", reqIngs, selIngs, matching);
     if (matching.length === reqIngs.length && selIngs.length > 0) {
       this.props.completeCookSession(this.state.selectedCookSession.id);
-      this.setState(DEFAULT_STATE);
+      this.setState({
+        selectedOrder: null,
+        selectedCookSession: null,
+        selectedIngredients: [],
+        requiredIngredients: []
+      });
       alert("Order Complete");
     }
   }
@@ -148,16 +206,7 @@ class Kitchen extends Component {
             <div className="col-2" id="shelf">
               Shelf
               <ul>
-                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="100">cheese {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("cheese")}>+</span>: null}</li>
-                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="101">beef {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("beef")}>+</span>: null}</li>
-                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="102">bread {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("bread")}>+</span>: null}</li>
-                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="103">butter {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("butter")}>+</span>: null}</li>
-                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="104">tomato sauce {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("tomato sauce")}>+</span>:  null}</li>
-                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="105">pasta {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("pasta")}>+</span>: null}</li>
-                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="106">dough {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("dough")}>+</span>: null}</li>
-                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="107">sausage {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("sausage")}>+</span>: null}</li>
-                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="108">beans {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("beans")}>+</span>: null}</li>
-                <li draggable={this.state.selectedCookSession ? "true" : "false"} id="109">onions {this.state.selectedCookSession ? <span className="add-ing" onClick={() => this.addIngToCookSession("onions")}>+</span>: null}</li>
+                { this.stockShelf() }
               </ul>
               <hr />
               Required Ingredients

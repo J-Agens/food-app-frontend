@@ -3,7 +3,7 @@ import React from 'react';
 const Pot = (props) => {
   // console.log("POT cookSession: ", props.pot.cook_session.recipe_name);
   return (
-    <div className="pot col-2">
+    <div className="pot col-2" onDragOver={(e) => props.onDragOver(e)} onDrop={(e) => props.onDrop(e)}>
 
       <h6>
       {props.pot.cook_session ? props.pot.cook_session.recipe_name : null}
