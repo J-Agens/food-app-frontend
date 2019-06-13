@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from './actions/userActions'
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -11,8 +11,6 @@ import TablesList from './containers/TablesList';
 import Kitchen from './containers/Kitchen';
 import Home from './components/Home';
 import Table from './containers/Table';
-import Signup from './components/Signup';
-import Login from './components/Login';
 
 const BASE_URL = "http://localhost:3000/";
 const TABLES_URL = BASE_URL + "tables";

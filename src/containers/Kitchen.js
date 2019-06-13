@@ -152,7 +152,7 @@ class Kitchen extends Component {
   }
 
   addIngToCookSession = (ing) => {
-    if (this.state.requiredIngredients.includes(ing)) {
+    if (this.state.requiredIngredients.includes(ing) && !this.state.selectedIngredients.includes(ing)) {
       this.setState(prevState => {
         return {
           selectedIngredients: [...prevState.selectedIngredients, ing]
@@ -168,7 +168,7 @@ class Kitchen extends Component {
     const selIngs = this.state.selectedIngredients;
     const matching = selIngs.filter(ing => reqIngs.includes(ing))
     console.log("reqIngs, selIngs, matching", reqIngs, selIngs, matching);
-    if (matching.length === reqIngs.length && selIngs.length > 0) {
+    if (matching.length === reqIngs.length && selIngs.length === reqIngs.length) {
       this.props.completeCookSession(this.state.selectedCookSession.id);
       this.setState({
         pots: null,

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import TableCard from '../components/TableCard';
-import { Route, Link } from 'react-router-dom';
 class TablesList extends Component {
 
   generateTableCards = () => {
