@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 class TableCard extends Component {
 
   generateUsersAtTable = () => {
-    return this.props.table.users_at_table.map((user, idx) => {
+    return this.props.table.active_users_at_table.map((user, idx) => {
       return <li key={idx}>{user}</li>
     });
   }
