@@ -19,8 +19,8 @@ class Pot extends Component {
   }
 
   renderIngs = () => {
-    return this.state.ingredients.map(ing => {
-      return <span className="tiny">{ing.slice(0, 3)}|</span>
+    return this.state.ingredients.map((ing, idx) => {
+      return <span key={idx} className="tiny">{ing.slice(0, 3)}|</span>
     });
   }
 
