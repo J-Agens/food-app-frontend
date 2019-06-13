@@ -153,7 +153,7 @@ class App extends Component {
       <React.Fragment>
         <Navbar />
         <Switch>
-          <Route exact path="/tables" render={routerProps => <TablesList {...routerProps} tables={this.state.tables} /> } /> */}
+          <Route exact path="/tables" render={routerProps => <TablesList {...routerProps} tables={this.state.tables} orders={this.state.orders}/> } /> */}
           <Route
             path="/tables/:tableId"
             render={routerProps =>

@@ -4,7 +4,7 @@ class TablesList extends Component {
 
   generateTableCards = () => {
     return this.props.tables.map(table => {
-      return <TableCard key={table.id} table={table} />
+      return <TableCard key={table.id} table={table} orders={this.props.orders}/>
     });
   }
 
