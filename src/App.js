@@ -91,6 +91,9 @@ class App extends Component {
     };
 
     fetch(ORDERS_URL, configObj)
+      .then(() => {
+        this.loadTablesAndOrders();
+      })
       .catch(error => {
         console.log(error.message);
       })

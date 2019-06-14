@@ -23,48 +23,35 @@ class TableCard extends Component {
   }
 
   componentDidMount() {
+    this.props.loadTablesAndOrders();
     this.setState({
-      usersAtTable: this.props.activeUsers(this.props.table),
-      total: this.props.total(this.props.table)
+      usersAtTable: this.tableActiveUsers(),
+      total: this.tableTotal()
     });
   }
 
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   // do things with nextProps.someProp and prevState.cachedSomeProp
-  //   // nextProps.loadTablesAndOrders();
-  // }
-
-  // componentWillUpdate() {
-  //   console.log("CWU");
-  //   // this.props.loadTablesAndOrders();
-  // }
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return ( this.props.table !== nextProps.table )
-  // }
-
   // ORDERS FUNCTIONS
+  tableOrders = () => {
+    return this.props.orders.filter(order => order.table_id === this.props.table.id);
+  }
 
-  // tableOrders = () => {
-  //   return this.props.orders.filter(order => order.table_id === this.props.table.id);
-  // }
-  //
-  // tableTotal = () => {
-  //   let tableOrderPrices = this.tableOrders().map(order => order.price);
-  //   const reducer = (accumulator, currValue) => accumulator + currValue;
-  //   if (tableOrderPrices.length > 0) {
-  //     return tableOrderPrices.reduce(reducer);
-  //   } else {
-  //     return null;
-  //   }
-  // }
-  //
-  // tableActiveOrders = () => {
-  //   return this.tableOrders().filter(order => order.served === false)
-  // }
-  //
-  // tableActiveUsers = () => {
-  //   return this.tableActiveOrders().map(order => order.customer).unique();
-  // }
+  tableTotal = () => {
+    let tableOrderPrices = this.tableOrders().map(order => order.price);
+    const reducer = (accumulator, currValue) => accumulator + currValue;
+    if (tableOrderPrices.length > 0) {
+      return tableOrderPrices.reduce(reducer);
+    } else {
+      return null;
+    }
+  }
+
+  tableActiveOrders = () => {
+    return this.tableOrders().filter(order => order.served === false)
+  }
+
+  tableActiveUsers = () => {
+    return this.tableActiveOrders().map(order => order.customer).unique();
+  }
 
   generateUsersAtTable = () => {
     return this.state.usersAtTable.map((user, idx) => {
@@ -94,10 +81,6 @@ class TableCard extends Component {
   }
 
   render() {
-    console.log("TableCard state: ", this.state);
-    console.log("tableActiveOrders", this.props.activeOrders);
-    console.log("tableActiveUsers", this.props.activeUsers);
-    console.log("tableTotal", this.props.total);
     return (
       <div className="col-3 table-card">
         <ActionCableConsumer
@@ -106,6 +89,13 @@ class TableCard extends Component {
             console.log('order was recieved to TABLECARD', order);
             this.addUserByOrder(order);
             this.incrementTotalByOrder(order);
+          }}
+        />
+        <ActionCableConsumer
+          channel={{channel: "TablesChannel"}}
+          onReceived={(order) => {
+            console.log("order was served", order);
+            // this.props.serveOrderToTable(order);
           }}
         />
       <h4><Link to={`/tables/${this.props.table.id}`}>Table {this.props.table.id} | ${this.state.total > 0 ? this.state.total : 0}</Link></h4>
