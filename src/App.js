@@ -24,7 +24,7 @@ class App extends Component {
     table: null, // starting with just one table --> not currently in use anymore, should delete
     tables: null,
     orders: null,
-    recipes: null
+    recipes: null,
   }
 
   componentDidMount() {
@@ -43,7 +43,18 @@ class App extends Component {
           }
         })
     }
-    // Maybe move this to another component
+
+    this.loadTablesAndOrders();
+
+    fetch(RECIPES_URL)
+    .then(res => res.json())
+    .then(recipesData => {
+      this.setState({ recipes: recipesData })
+    })
+  }
+
+  loadTablesAndOrders = () => {
+    // Maybe need to relocate or abstract futher
     fetch(TABLES_URL)
     .then(res => res.json())
     .then(tablesData => {
@@ -58,12 +69,6 @@ class App extends Component {
         tables: tablesData,
         orders: ordersData
       });
-    })
-
-    fetch(RECIPES_URL)
-    .then(res => res.json())
-    .then(recipesData => {
-      this.setState({ recipes: recipesData })
     })
   }
 
@@ -151,9 +156,17 @@ class App extends Component {
       <div>
       { !!this.props.user ?
       <React.Fragment>
-        <Navbar />
+        <Navbar loadTablesAndOrders={this.loadTablesAndOrders}/>
         <Switch>
-          <Route exact path="/tables" render={routerProps => <TablesList {...routerProps} tables={this.state.tables} orders={this.state.orders}/> } /> */}
+          <Route
+            exact path="/tables"
+            render={routerProps =>
+              <TablesList {...routerProps}
+                loadTablesAndOrders={this.loadTablesAndOrders}
+                tables={this.state.tables}
+                orders={this.state.orders}
+              /> }
+          /> }
           <Route
             path="/tables/:tableId"
             render={routerProps =>
@@ -170,13 +183,18 @@ class App extends Component {
             path="/kitchen"
             render={ routerProps =>
                 <Kitchen {...routerProps}
+                loadTablesAndOrders={this.loadTablesAndOrders}
                 orders={this.state.orders}
                 completeCookSession={this.completeCookSession}
                 postOrderToBoard={this.postOrderToBoard}
                 unpinOrderFromBoard={this.unpinOrderFromBoard}
               />
             } />
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" render={routerProps =>
+            <Home {...routerProps}
+              loadTablesAndOrders={this.loadTablesAndOrders}
+            /> }
+          />
         </Switch>
       </React.Fragment>
     : <div className="container-fluid" id="home-container">

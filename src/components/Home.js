@@ -5,6 +5,16 @@ import { connect } from 'react-redux';
 
 class Home extends Component {
 
+  componentDidMount() {
+    // console.log("HOME CDM: PROPS: ", this.props);
+    if (!!this.props.loadTablesAndOrders) {
+      // console.log("HOME CDM RUNNING with user", this.props.user);
+      this.props.loadTablesAndOrders();
+    } else {
+      console.log("NOT WORKING :(");
+    }
+  }
+
   generateOrders = () => {
     return this.props.user.orders.map(order => {
       return <li style={order.served ? {color: "green"} : {color: "black"}}key={order.id}>{order.item_name} - ${order.price}</li>
@@ -12,7 +22,8 @@ class Home extends Component {
   }
 
   render() {
-    console.log("HOME USER : ", this.props.user);
+    console.log("HOME PROPS : ", this.props);
+    console.log("HOME STATE : ", this.state);
     return (
       <React.Fragment>
       { !this.props.user ?
@@ -42,5 +53,6 @@ const mapStateToProps = state => {
     user: state.usersReducer.user
   }
 }
+
 
 export default connect(mapStateToProps)(Home);

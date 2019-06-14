@@ -30,6 +30,7 @@ class Kitchen extends Component {
       .catch(error => {
         console.log(error.message);
       })
+    this.props.loadTablesAndOrders();
   }
 
   handleOrderSelection = (order) => {
