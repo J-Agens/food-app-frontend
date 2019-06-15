@@ -22,8 +22,8 @@ class Home extends Component {
   }
 
   render() {
-    console.log("HOME PROPS : ", this.props);
-    console.log("HOME STATE : ", this.state);
+    // console.log("HOME PROPS : ", this.props);
+    // console.log("HOME STATE : ", this.state);
     return (
       <React.Fragment>
       { !this.props.user ?

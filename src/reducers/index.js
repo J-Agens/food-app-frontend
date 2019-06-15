@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
 import usersReducer from './usersReducer'
+// import tablesReducer from './tablesReducer';
 
 const rootReducer = combineReducers({
-  usersReducer // { usersReducer: usersReducer }
+  usersReducer //, // { usersReducer: usersReducer }
+  // tablesReducer
 })
 
 // const reducer = (state = {init: 'inital state'}, action ) = {

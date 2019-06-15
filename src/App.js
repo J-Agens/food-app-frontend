@@ -12,8 +12,8 @@ import Kitchen from './containers/Kitchen';
 import Home from './components/Home';
 import Table from './containers/Table';
 
-const BASE_URL = "http://localhost:3000/";
-const TABLES_URL = BASE_URL + "tables";
+export const BASE_URL = "http://localhost:3000/";
+export const TABLES_URL = BASE_URL + "tables";
 const RECIPES_URL = BASE_URL + "recipes";
 const ORDERS_URL = BASE_URL + "orders";
 const COOK_SESSIONS_URL = BASE_URL + "cook_sessions";
@@ -77,7 +77,8 @@ class App extends Component {
       item_name: orderObj.itemName,
       user_id: this.props.user.id,
       served: false,
-      price: Math.floor(Math.random() * 25 + 5),
+      // price: Math.floor(Math.random() * 25 + 5),
+      price: 1,
       table_id: orderObj.tableId
     };
 

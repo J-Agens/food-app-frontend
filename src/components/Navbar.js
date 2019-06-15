@@ -13,7 +13,7 @@ class NavBar extends Component {
   }
 
   render() {
-    console.log("NAVBAR PROPS: ", this.props);
+    // console.log("NAVBAR PROPS: ", this.props);
     return (
       <div className="navbar">
         <NavLink to="/">Home</NavLink>

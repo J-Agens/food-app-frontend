@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ActionCableConsumer } from 'react-actioncable-provider';
 
+import { BASE_URL, TABLES_URL } from '../App';
+
 Array.prototype.unique = function() {
     var arr = [];
     for(var i = 0; i < this.length; i++) {
@@ -28,6 +30,19 @@ class TableCard extends Component {
       usersAtTable: this.tableActiveUsers(),
       total: this.tableTotal()
     });
+
+    // NEW //
+    fetch(`${TABLES_URL}/${this.props.table.id}`)
+      .then(res => res.json())
+      .then(table => {
+        this.setState({
+          usersAtTable: table.active_users_at_table,
+          total: table.table_total
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
 
   // ORDERS FUNCTIONS
@@ -61,6 +76,9 @@ class TableCard extends Component {
 
   // SINGLE SOURCE OF TRUTH SHOULD BE ORDERS
   addUserByOrder = (order) => {
+    // let customers = this.props.table.active_users_at_table.map(user => user.username);
+    // console.log("CUSTOMERS: ", customers);
+    // console.log("tableActiveUsers() => ", this.tableActiveUsers());
     if (!this.state.usersAtTable.includes(order.customer) && order.table_id === this.props.table.id) {
       this.setState(prevState => {
         return {
@@ -81,6 +99,7 @@ class TableCard extends Component {
   }
 
   render() {
+    console.log("TABLECARD STATE: ", this.state);
     return (
       <div className="col-3 table-card">
         <ActionCableConsumer
@@ -95,7 +114,14 @@ class TableCard extends Component {
           channel={{channel: "TablesChannel"}}
           onReceived={(order) => {
             console.log("order was served", order);
-            // this.props.serveOrderToTable(order);
+            fetch(`${TABLES_URL}/${this.props.table.id}`)
+              .then(res => res.json())
+              .then(table => {
+                this.setState({
+                  usersAtTable: table.active_users_at_table,
+                  total: table.table_total 
+                })
+              })
           }}
         />
       <h4><Link to={`/tables/${this.props.table.id}`}>Table {this.props.table.id} | ${this.state.total > 0 ? this.state.total : 0}</Link></h4>
