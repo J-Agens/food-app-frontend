@@ -17,31 +17,6 @@ class TablesList extends Component {
     this.props.loadTablesAndOrders();
   }
 
-  // // TRANSFERED FROM TABLECARD //
-  // tableOrders = (table) => {
-  //   console.log("tableOrders props", this.props);
-  //   return this.props.orders.filter(order => order.table_id === table.id);
-  // }
-  //
-  // tableTotal = (table) => {
-  //   let tableOrderPrices = this.tableOrders(table).map(order => order.price);
-  //   const reducer = (accumulator, currValue) => accumulator + currValue;
-  //   if (tableOrderPrices.length > 0) {
-  //     return tableOrderPrices.reduce(reducer);
-  //   } else {
-  //     return null;
-  //   }
-  // }
-  //
-  // tableActiveOrders = (table) => {
-  //   return this.tableOrders(table).filter(order => order.served === false)
-  // }
-  //
-  // tableActiveUsers = (table) => {
-  //   return this.tableActiveOrders(table).map(order => order.customer).unique();
-  // }
-  // /////////////////////////////////
-
   generateTableCards = () => {
     return this.props.tables.map(table => {
       return (

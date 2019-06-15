@@ -21,7 +21,7 @@ const COOK_SESSIONS_URL = BASE_URL + "cook_sessions";
 class App extends Component {
 
   state = {
-    table: null, // starting with just one table --> not currently in use anymore, should delete
+    // table: null, // starting with just one table --> not currently in use anymore, should delete
     tables: null,
     orders: null,
     recipes: null,
