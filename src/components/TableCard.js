@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ActionCableConsumer } from 'react-actioncable-provider';
+import { connect } from 'react-redux';
 
 import { BASE_URL, TABLES_URL } from '../App';
 
@@ -25,7 +26,7 @@ class TableCard extends Component {
   }
 
   componentDidMount() {
-    this.props.loadTablesAndOrders();
+    // this.props.loadTablesAndOrders();
     this.setState({
       usersAtTable: this.tableActiveUsers(),
       total: this.tableTotal()
@@ -70,7 +71,11 @@ class TableCard extends Component {
 
   generateUsersAtTable = () => {
     return this.state.usersAtTable.map((user, idx) => {
-      return <li key={idx}>{user}</li>
+      if (user === this.props.user.username) {
+        return <li className="user-tablecard-li tablecard-li" key={idx}>{user}</li>
+      } else {
+        return <li className="tablecard-li" key={idx}>{user}</li>
+      }
     });
   }
 
@@ -119,7 +124,7 @@ class TableCard extends Component {
               .then(table => {
                 this.setState({
                   usersAtTable: table.active_users_at_table,
-                  total: table.table_total 
+                  total: table.table_total
                 })
               })
           }}
@@ -135,4 +140,10 @@ class TableCard extends Component {
 
 }
 
-export default TableCard;
+const mapStateToProps = state => {
+  return {
+    user: state.usersReducer.user
+  }
+}
+
+export default connect(mapStateToProps)(TableCard);

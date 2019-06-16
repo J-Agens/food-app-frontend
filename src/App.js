@@ -92,11 +92,42 @@ class App extends Component {
     };
 
     fetch(ORDERS_URL, configObj)
+      .then(order => {
+
+          console.log("ORDER!!!:",order);
+      })
       .then(() => {
         this.loadTablesAndOrders();
       })
       .catch(error => {
         console.log(error.message);
+      })
+  }
+
+  cancelOrder = (orderObj) => {
+
+    let formData = {
+      id: orderObj.id
+    }
+
+    let configObj = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(orderObj)
+    };
+
+    fetch(`${ORDERS_URL}/${orderObj.id}`, configObj)
+      .then(res => res.json())
+      .then(orderData => {
+        this.setState(prevState => {
+          const filtered = prevState.orders.filter(o => o.id !== orderData.id);
+          return {
+            orders: filtered
+          }
+        });
       })
   }
 
@@ -177,8 +208,10 @@ class App extends Component {
               <Table {...routerProps}
                 table={!!this.state.tables ? this.state.tables[routerProps.match.params.tableId - 1] : null}
                 orders={this.state.orders}
+                loadTablesAndOrders={this.loadTablesAndOrders}
                 recipes={this.state.recipes}
                 placeOrder={this.placeOrder}
+                cancelOrder={this.cancelOrder}
                 postOrderToTable={this.postOrderToTable}
                 serveOrderToTable={this.serveOrderToTable}
                 />

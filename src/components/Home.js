@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 class Home extends Component {
 
   componentDidMount() {
-    // console.log("HOME CDM: PROPS: ", this.props);
+    console.log("HOME CDM: PROPS: ", this.props);
     if (!!this.props.loadTablesAndOrders) {
       // console.log("HOME CDM RUNNING with user", this.props.user);
       this.props.loadTablesAndOrders();

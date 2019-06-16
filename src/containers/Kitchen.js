@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { ActionCableConsumer } from 'react-actioncable-provider';
+import { connect } from 'react-redux';
+
 import Pot from '../components/Pot';
 const BASE_URL = "http://localhost:3000/";
 const COOK_SESSIONS_URL = BASE_URL + "cook_sessions";
@@ -38,9 +40,11 @@ class Kitchen extends Component {
   }
 
   generateOrders = () => {
-    const placedOrders = this.props.orders.filter(order => {
-      return !order.served
+    // Only orders placed by other users
+    let placedOrders = this.props.orders.filter(order => {
+      return !order.served && order.user_id !== this.props.user.id
     })
+
     return placedOrders.map(order => {
       return <li onClick={() => this.handleOrderSelection(order)} key={order.id}>{order.item_name} - {order.customer} - Table #{order.table_id}</li>
     })
@@ -284,4 +288,10 @@ class Kitchen extends Component {
   }
 }
 
-export default Kitchen;
+const mapStateToProps = state => {
+  return {
+    user: state.usersReducer.user
+  }
+}
+
+export default connect(mapStateToProps)(Kitchen);

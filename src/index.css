@@ -85,6 +85,24 @@ code {
 }
 
 .table-card {
+  min-height: 200px;
   background-color: #dbdbdb;
   margin: 5px;
+}
+
+.user-placed-order {
+  color: #0847ad;
+  cursor: pointer;
+}
+
+.user-placed-order:hover {
+  color: white;
+}
+
+.user-served-order {
+  color: #0847ad;
+}
+
+.user-tablecard-li {
+  color: #0847ad;
 }

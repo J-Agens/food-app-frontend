@@ -1,24 +1,41 @@
 import React, { Component, Fragment } from 'react';
 import { ActionCableConsumer } from 'react-actioncable-provider';
+import { connect } from 'react-redux';
 
 class Table extends Component {
+
+  componentDidMount() {
+    this.props.loadTablesAndOrders();
+  }
 
   // Had to make orders the single source of truth for multiple tables ironically
   tableOrders = () => {
     return this.props.orders.filter(order => order.table_id === this.props.table.id);
   }
 
+  handleCancelClick = (order) => {
+    this.props.cancelOrder(order);
+  }
+
   generatePlacedOrders = () => {
     const placedOrders = this.tableOrders().filter(order => order.served === false);
     return placedOrders.map(order => {
-      return <li key={order.id}>{order.item_name}</li>
+      if (order.user_id === this.props.user.id) {
+        return <li className="placed-order user-placed-order" onClick={() => this.handleCancelClick(order)} key={order.id}>{order.item_name}</li>
+      } else {
+        return <li className="placed-order" key={order.id}>{order.item_name}</li>
+      }
     })
   }
 
   generateServedOrders = () => {
     const servedOrders = this.tableOrders().filter(order => order.served === true);
     return servedOrders.map(order => {
-      return <li key={order.id}>{order.item_name}</li>
+      if (order.user_id === this.props.user.id) {
+        return <li className="served-order user-served-order" key={order.id}>{order.item_name}</li>
+      } else {
+        return <li className="served-order" key={order.id}>{order.item_name}</li>
+      }
     });
   }
 
@@ -90,4 +107,10 @@ class Table extends Component {
   }
 }
 
-export default Table;
+const mapStateToProps = state => {
+  return {
+    user: state.usersReducer.user
+  }
+}
+
+export default connect(mapStateToProps)(Table);
