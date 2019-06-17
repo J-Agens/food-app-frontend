@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from './actions/userActions'
+import { ActionCableConsumer } from 'react-actioncable-provider';
 // import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -11,6 +12,8 @@ import TablesList from './containers/TablesList';
 import Kitchen from './containers/Kitchen';
 import Home from './components/Home';
 import Table from './containers/Table';
+
+import money from './prices/recipes';
 
 export const BASE_URL = "http://localhost:3000/";
 export const TABLES_URL = BASE_URL + "tables";
@@ -78,7 +81,7 @@ class App extends Component {
       user_id: this.props.user.id,
       served: false,
       // price: Math.floor(Math.random() * 25 + 5),
-      price: 1,
+      price: money[orderObj.itemName],
       table_id: orderObj.tableId
     };
 
@@ -111,23 +114,27 @@ class App extends Component {
     }
 
     let configObj = {
-      method: "DELETE",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body: JSON.stringify(orderObj)
+      body: JSON.stringify(formData)
     };
 
-    fetch(`${ORDERS_URL}/${orderObj.id}`, configObj)
-      .then(res => res.json())
-      .then(orderData => {
-        this.setState(prevState => {
-          const filtered = prevState.orders.filter(o => o.id !== orderData.id);
-          return {
-            orders: filtered
-          }
-        });
+    fetch(`${BASE_URL}cancel`, configObj)
+      // .then(res => res.json())
+      // .then(orderData => {
+      //   console.log("orderData: ", orderData);
+      //   // this.setState(prevState => {
+      //   //   const filtered = prevState.orders.filter(o => o.id !== orderData.id);
+      //   //   return {
+      //   //     orders: filtered
+      //   //   }
+      //   // });
+      // })
+      .catch(error => {
+        console.log("error in deleting order, ", error);
       })
   }
 
@@ -157,20 +164,20 @@ class App extends Component {
     });
   }
 
-  unpinOrderFromBoard = (order) => {
-    const filtered = this.state.orders.filter(odr => odr.id !== order.id);
-    console.log("serveOrderToTable => filtered: ", filtered);
-    this.setState({ orders: [...filtered, order] });
-  }
+  // unpinOrderFromBoard = (order) => {
+  //   const filtered = this.state.orders.filter(odr => odr.id !== order.id);
+  //   console.log("serveOrderToTable => filtered: ", filtered);
+  //   this.setState({ orders: [...filtered, order] });
+  // }
 
-  postOrderToTable = (order) => {
-    this.setState(prevState => {
-      const filtered = prevState.orders.filter(ord => ord.id !== order.id);
-      return {
-        orders: [...filtered, order]
-      };
-    });
-  }
+  // postOrderToTable = (order) => {
+  //   this.setState(prevState => {
+  //     const filtered = prevState.orders.filter(ord => ord.id !== order.id);
+  //     return {
+  //       orders: [...filtered, order]
+  //     };
+  //   });
+  // }
 
   serveOrderToTable = (order) => {
     this.setState(prevState => {
@@ -182,6 +189,43 @@ class App extends Component {
   }
 
 
+  payBill = (userId) => {
+    let formData = {
+      id: userId
+    };
+    let configObj = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify(formData)
+    };
+    fetch("http://localhost:3000/pay_bill", configObj)
+      .then(res => res.json())
+      .then(data => {
+        console.log("data: ", data);
+        // this.setState(prevState => {
+        //   let filtered = prevState.orders.filter(order => !data.order_ids.includes(order.id))
+        //   return {
+        //     orders: filtered
+        //   }
+        // })
+      })
+      .catch(error => {
+        console.log("pay_bill error: ", error);
+      })
+  }
+
+  removePaidOrders = (orderIds) => {
+    this.setState(prevState => {
+      const filtered = this.state.orders.filter(ord => !orderIds.includes(ord.id))
+      return {
+        orders: filtered
+      }
+    });
+  }
+
   render() {
     console.log("APP STATE: ", this.state);
     console.log("App state.orders: ", this.state.orders);
@@ -191,6 +235,29 @@ class App extends Component {
       <div>
       { !!this.props.user ?
       <React.Fragment>
+        <ActionCableConsumer
+          channel={{channel: "PayChannel"}}
+          onReceived={(info) => {
+            console.log('info was recieved', info);
+            this.removePaidOrders(info.order_ids);
+            // this.loadTablesAndOrders();
+          }}
+        />
+        <ActionCableConsumer
+          channel={{channel: "TablesChannel"}}
+          onReceived={(order) => {
+            console.log("order was served", order);
+            this.serveOrderToTable(order);
+          }}
+        />
+        <ActionCableConsumer
+            channel={{channel: "OrderBoardChannel"}}
+            onReceived={(order) => {
+              console.log('order was recieved', order);
+              this.postOrderToBoard(order);
+              // this.props.loadTablesAndOrders();
+            }}
+          />
         <Navbar loadTablesAndOrders={this.loadTablesAndOrders}/>
         <Switch>
           <Route
@@ -230,6 +297,8 @@ class App extends Component {
           <Route exact path="/" render={routerProps =>
             <Home {...routerProps}
               loadTablesAndOrders={this.loadTablesAndOrders}
+              orders={this.state.orders}
+              payBill={this.payBill}
             /> }
           />
         </Switch>

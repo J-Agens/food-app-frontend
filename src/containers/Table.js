@@ -15,6 +15,7 @@ class Table extends Component {
 
   handleCancelClick = (order) => {
     this.props.cancelOrder(order);
+    console.log("delete order event handler (not working yet)");
   }
 
   generatePlacedOrders = () => {
@@ -57,20 +58,21 @@ class Table extends Component {
     // , table_id: this.props.match.params.tableId
     return (
       <Fragment>
-        <ActionCableConsumer
+        {/*<ActionCableConsumer
           channel={{channel: "TablesChannel"}}
           onReceived={(order) => {
             console.log("order was served", order);
             this.props.serveOrderToTable(order);
           }}
-        />
-        <ActionCableConsumer
+        /> */}
+      {/*  <ActionCableConsumer
           channel={{channel: "OrderBoardChannel"}}
           onReceived={(order) => {
             console.log('order was recieved', order);
             this.props.postOrderToTable(order);
+            // this.props.loadTablesAndOrders();
           }}
-        />
+        /> */}
         <div className="container">
           <div className="row">
             <h3>Table {this.props.table ? this.props.table.id : null}</h3>

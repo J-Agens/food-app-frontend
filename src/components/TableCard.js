@@ -115,7 +115,7 @@ class TableCard extends Component {
             this.incrementTotalByOrder(order);
           }}
         />
-        <ActionCableConsumer
+       <ActionCableConsumer
           channel={{channel: "TablesChannel"}}
           onReceived={(order) => {
             console.log("order was served", order);
@@ -129,6 +129,16 @@ class TableCard extends Component {
               })
           }}
         />
+      <ActionCableConsumer
+        channel={{channel: "PayChannel"}}
+        onReceived={(info) => {
+          console.log('bill was paid', info);
+          this.setState({
+            usersAtTable: this.tableActiveUsers(),
+            total: this.tableTotal()
+          })
+        }}
+      />
       <h4><Link to={`/tables/${this.props.table.id}`}>Table {this.props.table.id} | ${this.state.total > 0 ? this.state.total : 0}</Link></h4>
         <hr />
         <ul>
