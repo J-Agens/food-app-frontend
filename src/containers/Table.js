@@ -47,10 +47,16 @@ class Table extends Component {
   }
 
   handleClick = (e) => {
-    this.props.placeOrder({
-      itemName: e.target.textContent,
-      tableId: this.props.table.id
-    });
+    console.log("WALLET: ", this.props.wallet < 0);
+    if (this.props.wallet < 0) {
+      this.props.history.push("/kitchen")
+    } else {
+      // this.props.history.push("/kitchen")
+      this.props.placeOrder({
+        itemName: e.target.textContent,
+        tableId: this.props.table.id
+      });
+    }
   }
 
   render() {

@@ -283,6 +283,7 @@ class App extends Component {
                 cancelOrder={this.cancelOrder}
                 postOrderToTable={this.postOrderToTable}
                 serveOrderToTable={this.serveOrderToTable}
+                wallet={this.state.wallet}
                 />
             } />
           <Route

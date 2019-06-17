@@ -87,7 +87,8 @@ class Kitchen extends Component {
   createCookSession = (orderInfo, potId) => {
     let formData = {
       order: orderInfo,
-      pot_id: potId
+      pot_id: potId,
+      chef_id: this.props.user.id
     }
 
     let configObj = {
