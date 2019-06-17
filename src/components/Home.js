@@ -61,6 +61,7 @@ class Home extends Component {
       <div className="row justify-content-center">
         <div className="col-6">
           <h3>You are logged in, {this.props.user.username}</h3>
+          <h5>Wallet: ${this.props.wallet}</h5>
           <h4>Total: ${this.state.total} |<button className="btn" onClick={this.handlePayBillClick}>Pay Bill</button></h4>
           <h5>Orders:</h5>
           <ul>

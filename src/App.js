@@ -28,6 +28,7 @@ class App extends Component {
     tables: null,
     orders: null,
     recipes: null,
+    wallet: 0
   }
 
   componentDidMount() {
@@ -43,6 +44,7 @@ class App extends Component {
           console.log(user);
           if (!user.errors) {
             this.props.login(user);
+            this.setState({ wallet: user.wallet })
           }
         })
     }
@@ -205,12 +207,12 @@ class App extends Component {
       .then(res => res.json())
       .then(data => {
         console.log("data: ", data);
-        // this.setState(prevState => {
-        //   let filtered = prevState.orders.filter(order => !data.order_ids.includes(order.id))
-        //   return {
-        //     orders: filtered
-        //   }
-        // })
+        this.setState(prevState => {
+          const newWallet = prevState.wallet - data.total
+          return {
+            wallet: newWallet
+          }
+        });
       })
       .catch(error => {
         console.log("pay_bill error: ", error);
@@ -299,6 +301,7 @@ class App extends Component {
               loadTablesAndOrders={this.loadTablesAndOrders}
               orders={this.state.orders}
               payBill={this.payBill}
+              wallet={this.state.wallet}
             /> }
           />
         </Switch>
