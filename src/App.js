@@ -6,7 +6,7 @@ import { ActionCableConsumer } from 'react-actioncable-provider';
 // import logo from './logo.svg';
 import './App.css';
 
-import Navbar from './components/Navbar';
+import NavComponent from './components/NavComponent';
 import TablesList from './containers/TablesList';
 import Kitchen from './containers/Kitchen';
 import Home from './components/Home';
@@ -265,7 +265,7 @@ class App extends Component {
               // this.props.loadTablesAndOrders();
             }}
           />
-        <Navbar loadTablesAndOrders={this.loadTablesAndOrders}/>
+        <NavComponent loadTablesAndOrders={this.loadTablesAndOrders}/>
         <Switch>
           <Route
             exact path="/tables"
@@ -313,9 +313,8 @@ class App extends Component {
           />
         </Switch>
       </React.Fragment>
-    : <div className="container-fluid" id="home-container">
-        <Home loadTablesAndOrders={this.loadTablesAndOrders} setWallet={this.setWallet}/>
-      </div>
+    :
+      <Home loadTablesAndOrders={this.loadTablesAndOrders} setWallet={this.setWallet}/>
     }
   </div> // had to wrap to test login
     );

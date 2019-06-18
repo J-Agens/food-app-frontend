@@ -18,9 +18,6 @@ Array.prototype.unique = function() {
 class TableCard extends Component {
 
   state = {
-    // REALLY NEEDS TO BE ADJUSTED SO THAT ORDERS ARE THE SINGLE
-    // SOURCE OF TRUTH RATHER THAN TABLES
-    // usersAtTable: this.props.table.active_users_at_table
     usersAtTable: [],
     total: 0
   }
@@ -106,7 +103,7 @@ class TableCard extends Component {
   render() {
     console.log("TABLECARD STATE: ", this.state);
     return (
-      <div className="col-3 table-card">
+      <div className="col-md-3 table-card">
         <ActionCableConsumer
           channel={{channel: "OrderBoardChannel"}}
           onReceived={(order) => {

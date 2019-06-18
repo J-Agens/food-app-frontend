@@ -11,6 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 } */
+
+.navbar {
+  margin-bottom: 15px;
+  color: #023C40;
+}
+
+.btn-outline-info {
+    color: #17a2b8;
+    border-color: #17a2b8;
+}
+
 #menu {
   height: 600px;
   background-color: #dbdbdb;
@@ -80,6 +91,10 @@ code {
 
 .tiny {
   font-size: 0.001em;
+}
+
+.home-container {
+  margin-top: 15px;
 }
 
 .home-form {

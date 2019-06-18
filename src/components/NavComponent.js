@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { LOGOUT } from '../actions/types';
+import { Navbar, Nav, Button, FormControl, NavDropdown, Form, Container } from 'react-bootstrap';
 
-class NavBar extends Component {
+class NavComponent extends Component {
 
   logOut = () => {
     localStorage.clear();
@@ -15,6 +16,8 @@ class NavBar extends Component {
   render() {
     // console.log("NAVBAR PROPS: ", this.props);
     return (
+      <React.Fragment>
+      {/*
       <nav className="navbar navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
         <a class="navbar-brand" href="#">Untitled Project</a>
@@ -50,15 +53,46 @@ class NavBar extends Component {
         <form class="form-inline my-2 my-lg-0">
           <button class="btn btn-outline-success my-2 my-sm-0" onClick={this.logOut}>Log Out</button>
         </form>
-
-        {/* <NavLink to="/tables">Table</NavLink> */}
-
-
         </div>
-      </nav>
+      </nav> */}
+        <Navbar bg="light" varient="light" expand="lg">
+          <Container>
+            <Navbar.Brand>{this.props.user.username}</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="mr-auto">
+                <Nav.Link href="/">Home</Nav.Link>
+                <NavDropdown title="Tables" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="/tables/1">Table 1</NavDropdown.Item>
+                  <NavDropdown.Item href="/tables/2">Table 2</NavDropdown.Item>
+                  <NavDropdown.Item href="/tables/3">Table 3</NavDropdown.Item>
+                  <NavDropdown.Item href="/tables/4">Table 4</NavDropdown.Item>
+                  <NavDropdown.Item href="/tables/5">Table 5</NavDropdown.Item>
+                  <NavDropdown.Item href="/tables/6">Table 6</NavDropdown.Item>
+                  <NavDropdown.Item href="/tables/7">Table 7</NavDropdown.Item>
+                  <NavDropdown.Item href="/tables/8">Table 8</NavDropdown.Item>
+                  <NavDropdown.Item href="/tables/9">Table 9</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="/tables">All</NavDropdown.Item>
+                </NavDropdown>
+                <Nav.Link href="/kitchen">Kitchen</Nav.Link>
+              </Nav>
+              <form class="form-inline my-2 my-lg-0">
+                <button class="btn btn-outline-info my-2 my-sm-0" onClick={this.logOut}>Log Out</button>
+              </form>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+      </React.Fragment>
     );
   }
 
 };
 
-export default connect()(NavBar);
+const mapStateToProps = state => {
+  return {
+    user: state.usersReducer.user
+  }
+}
+
+export default connect(mapStateToProps)(NavComponent);

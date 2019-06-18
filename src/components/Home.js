@@ -53,24 +53,26 @@ class Home extends Component {
     // console.log("HOME STATE : ", this.state);
     return (
       <React.Fragment>
-      { !this.props.user ?
-      <div className="row">
-        <div className="col-6"><Login /></div>
-        <div className="col-6"><Signup loadTablesAndOrders={this.props.loadTablesAndOrders}/></div>
-      </div>
-      :
-      <div className="row justify-content-center">
-        <div className="col-6">
-          <h3>You are logged in, {this.props.user.username}</h3>
-          <h5>Wallet: ${this.props.wallet}</h5>
-          <h4>Total: ${this.state.total} |<button className="btn" onClick={this.handlePayBillClick}>Pay Bill</button></h4>
-          <h5>Orders:</h5>
-          <ul>
-            {this.props.orders ? this.generateOrders() : null}
-          </ul>
+        <div className="container">
+        { !this.props.user ?
+        <div className="row">
+          <div className="col-6"><Login /></div>
+          <div className="col-6"><Signup loadTablesAndOrders={this.props.loadTablesAndOrders}/></div>
         </div>
-      </div>
-      }
+        :
+        <div className="row">
+          <div className="col-6">
+            <h3>You are logged in, {this.props.user.username}</h3>
+            <h5 style={this.props.wallet < 0 ? {color: "red"} : null }>Wallet: ${this.props.wallet}</h5>
+            <h4>Total: ${this.state.total} |<button className="btn" onClick={this.handlePayBillClick}>Pay Bill</button></h4>
+            <h5>Orders:</h5>
+            <ul>
+              {this.props.orders ? this.generateOrders() : null}
+            </ul>
+          </div>
+        </div>
+        }
+        </div>
       </React.Fragment>
     )
   }
