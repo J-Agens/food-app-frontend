@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { LOGOUT } from '../actions/types';
 import { Navbar, Nav, Button, FormControl, NavDropdown, Form, Container } from 'react-bootstrap';
 
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+
 class NavComponent extends Component {
 
   logOut = () => {

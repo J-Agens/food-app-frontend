@@ -12,6 +12,23 @@ code {
     monospace;
 } */
 
+.user-stat {
+  font-size: 3em;
+  color: #969696;
+}
+
+.fa-receipt {
+  color: #dbdbdb;
+}
+
+.fa-cash-register {
+  color: #dbdbdb;
+}
+
+.fa-wallet {
+  color: #dbdbdb;
+}
+
 .navbar {
   margin-bottom: 15px;
   color: #023C40;
@@ -20,6 +37,10 @@ code {
 .btn-outline-info {
     color: #17a2b8;
     border-color: #17a2b8;
+}
+
+.top-row {
+  margin-bottom: 5vh;
 }
 
 #menu {
@@ -101,12 +122,6 @@ code {
   margin-top: 5vh;
 }
 
-.table-card {
-  min-height: 200px;
-  background-color: #dbdbdb;
-  margin: 5px;
-}
-
 .user-placed-order {
   color: #0847ad;
   cursor: pointer;
@@ -120,6 +135,48 @@ code {
   color: #0847ad;
 }
 
+.table-card {
+  min-height: 225px;
+  background-color: transparent;
+  border: 1px solid #dbdbdb;
+  margin: 5px;
+}
+
+.tablecard-li {
+  /* background-color: #dbdbdb; */
+  background-color: transparent;
+  padding: .5rem 1.25rem;
+  border: none;
+  font-size: 1.25em;
+}
+
 .user-tablecard-li {
   color: #0847ad;
+}
+
+.watermark {
+   position: absolute;
+   top: 20%;
+   left: 10%;
+   bottom: auto;
+   right: auto;
+   z-index: 0;
+   overflow: hidden;
+   color: #ededed;
+   font-size: 8em;
+   font-weight: bold;
+}
+
+.watermark-symbol {
+  /* color: #e2e2e2;
+  font-size: 0.5em; */
+  font-weight: normal;
+}
+
+/* color: #ededed;  light */
+/* color: #e2e2e2;  dark */
+
+.chair-link {
+  text-align: right;
+  padding: 5% 5% 0 0;
 }

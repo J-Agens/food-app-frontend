@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ActionCableConsumer } from 'react-actioncable-provider';
 import { connect } from 'react-redux';
+import ListGroup from 'react-bootstrap/ListGroup';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser, faChair } from '@fortawesome/free-solid-svg-icons'
 
 import { BASE_URL, TABLES_URL } from '../App';
 
@@ -69,9 +72,9 @@ class TableCard extends Component {
   generateUsersAtTable = () => {
     return this.state.usersAtTable.map((user, idx) => {
       if (user === this.props.user.username) {
-        return <li className="user-tablecard-li tablecard-li" key={idx}>{user}</li>
+        return <ListGroup.Item className="tablecard-li user-tablecard-li" key={idx}><FontAwesomeIcon icon={faUser} /> {"   " + user}</ListGroup.Item>
       } else {
-        return <li className="tablecard-li" key={idx}>{user}</li>
+        return <ListGroup.Item className="tablecard-li" key={idx}><FontAwesomeIcon icon={faUser} />{"   " + user}</ListGroup.Item>
       }
     });
   }
@@ -136,11 +139,11 @@ class TableCard extends Component {
           })
         }}
       />
-      <h4><Link to={`/tables/${this.props.table.id}`}>Table {this.props.table.id} | ${this.state.total > 0 ? this.state.total : 0}</Link></h4>
-        <hr />
-        <ul>
+      <h4 className="chair-link"><Link to={`/tables/${this.props.table.id}`}><FontAwesomeIcon icon={faChair}/></Link></h4>
+      <h1 className="watermark"><sup className="watermark-symbol">$</sup>{this.state.total > 0 ? this.state.total : 0}</h1>
+        <ListGroup varient="flush">
           {this.generateUsersAtTable()}
-        </ul>
+        </ListGroup>
       </div>
     )
   }

@@ -3,6 +3,9 @@ import Login from './Login';
 import Signup from './Signup';
 import { connect } from 'react-redux';
 import { BASE_URL, USERS_URL } from '../App';
+import { ListGroup } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faWallet, faReceipt, faCashRegister } from '@fortawesome/free-solid-svg-icons'
 
 class Home extends Component {
 
@@ -27,7 +30,8 @@ class Home extends Component {
   generateOrders = () => {
     const userOrders = this.props.orders.filter(ord => ord.user_id === this.props.user.id);
     return userOrders.map(order => {
-      return <li style={order.served ? {color: "green"} : {color: "black"}}key={order.id}>{order.item_name} - ${order.price}</li>
+      // return <li style={order.served ? {color: "green"} : {color: "black"}}key={order.id}>{order.item_name} - ${order.price}</li>
+      return <ListGroup.Item style={order.served ? {color: "green"} : {color: "#969696"}} key={order.id}>{order.item_name} - ${order.price}</ListGroup.Item>
     });
   }
 
@@ -52,28 +56,40 @@ class Home extends Component {
     // console.log("HOME PROPS : ", this.props);
     // console.log("HOME STATE : ", this.state);
     return (
-      <React.Fragment>
-        <div className="container">
+
+      <div className="container">
         { !this.props.user ?
         <div className="row">
           <div className="col-6"><Login /></div>
           <div className="col-6"><Signup loadTablesAndOrders={this.props.loadTablesAndOrders}/></div>
         </div>
         :
-        <div className="row">
-          <div className="col-6">
-            <h3>You are logged in, {this.props.user.username}</h3>
-            <h5 style={this.props.wallet < 0 ? {color: "red"} : null }>Wallet: ${this.props.wallet}</h5>
-            <h4>Total: ${this.state.total} |<button className="btn" onClick={this.handlePayBillClick}>Pay Bill</button></h4>
-            <h5>Orders:</h5>
-            <ul>
-              {this.props.orders ? this.generateOrders() : null}
-            </ul>
+        <React.Fragment>
+          <div className="row top-row">
+            <div className="col-6">
+              {/*<h3>You are logged in, {this.props.user.username}</h3> */}
+              <h5 style={this.props.wallet < 0 ? {color: "red"} : null }><FontAwesomeIcon icon={faWallet} size="6x"/> <span className="user-stat">  ${this.props.wallet}</span></h5>
+            </div>
+            <div className="col-6">
+              <h5><FontAwesomeIcon icon={faReceipt} size="6x" onClick={() => {console.log("clicked receipt")}}/> <span className="user-stat">  ${this.state.total}</span></h5>
+            </div>
           </div>
-        </div>
+          <div className="row">
+            <div className="col-6">
+              <h5><FontAwesomeIcon icon={faCashRegister} size="6x"/></h5>
+              <button className="btn" onClick={this.handlePayBillClick}>Pay Bill</button>
+            </div>
+            <div className="col-6">
+              {/*<h5 className="user-stat">Orders</h5>*/}
+              <ListGroup>
+                {this.props.orders ? this.generateOrders() : null}
+              </ListGroup>
+            </div>
+          </div>
+        </React.Fragment>
         }
-        </div>
-      </React.Fragment>
+      </div>
+
     )
   }
 }
