@@ -46,10 +46,13 @@ class App extends Component {
             this.props.login(user);
             this.setState({ wallet: user.wallet })
           }
+          // may need to move back below fetch.
+          this.loadTablesAndOrders();
         })
+
     }
 
-    this.loadTablesAndOrders();
+
 
     fetch(RECIPES_URL)
     .then(res => res.json())

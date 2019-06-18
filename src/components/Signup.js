@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { signup } from '../actions/userActions';
-
+// import { signup } from '../actions/userActions';
+// import { login } from '../actions/userActions';
 class Signup extends Component {
   state = {
     username: "",
@@ -29,13 +29,14 @@ class Signup extends Component {
     fetch("http://localhost:3000/signup", configObj)
       .then(res => res.json())
       .then(user => {
-        this.props.signup(user)
+        this.props.signup(user);
       })
 
     this.setState({ username: "", password: "" })
   }
 
   render() {
+    console.log("SIGNUP PROPS: ", this.props.dispatch);
     return (
       <div className="home-form">
         <h3>Sign Up</h3>
@@ -49,4 +50,11 @@ class Signup extends Component {
   }
 }
 
-export default connect(null, { signup })(Signup);
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (user) => dispatch({ type: "LOGIN", payload: user }),
+    signup: (user) => dispatch({ type: "SIGNUP", payload: user })
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Signup);
