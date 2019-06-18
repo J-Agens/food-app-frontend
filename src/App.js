@@ -5,7 +5,6 @@ import { login } from './actions/userActions'
 import { ActionCableConsumer } from 'react-actioncable-provider';
 // import logo from './logo.svg';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Navbar from './components/Navbar';
 import TablesList from './containers/TablesList';
@@ -20,6 +19,7 @@ export const TABLES_URL = BASE_URL + "tables";
 const RECIPES_URL = BASE_URL + "recipes";
 const ORDERS_URL = BASE_URL + "orders";
 const COOK_SESSIONS_URL = BASE_URL + "cook_sessions";
+export const USERS_URL = BASE_URL + "users"
 
 class App extends Component {
 
@@ -46,10 +46,8 @@ class App extends Component {
             this.props.login(user);
             this.setState({ wallet: user.wallet })
           }
-          // may need to move back below fetch.
-          this.loadTablesAndOrders();
         })
-
+      this.loadTablesAndOrders();
     }
 
 
@@ -78,6 +76,10 @@ class App extends Component {
         orders: ordersData
       });
     })
+  }
+
+  setWallet = (userObj) => {
+    this.setState({ wallet: userObj.wallet });
   }
 
   placeOrder = (orderObj) => {
@@ -305,13 +307,14 @@ class App extends Component {
               loadTablesAndOrders={this.loadTablesAndOrders}
               orders={this.state.orders}
               payBill={this.payBill}
+              setWallet={this.setWallet}
               wallet={this.state.wallet}
             /> }
           />
         </Switch>
       </React.Fragment>
     : <div className="container-fluid" id="home-container">
-        <Home />
+        <Home loadTablesAndOrders={this.loadTablesAndOrders} setWallet={this.setWallet}/>
       </div>
     }
   </div> // had to wrap to test login

@@ -30,6 +30,7 @@ class Signup extends Component {
       .then(res => res.json())
       .then(user => {
         this.props.signup(user);
+        this.props.loadTablesAndOrders();
       })
 
     this.setState({ username: "", password: "" })

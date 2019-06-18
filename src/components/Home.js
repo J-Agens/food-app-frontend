@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Login from './Login';
 import Signup from './Signup';
 import { connect } from 'react-redux';
+import { BASE_URL, USERS_URL } from '../App';
 
 class Home extends Component {
 
@@ -10,17 +11,17 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    console.log("HOME CDM: PROPS: ", this.props);
-    if (!!this.props.loadTablesAndOrders && !!this.props.orders) {
-      // console.log("HOME CDM RUNNING with user", this.props.user);
-      this.props.loadTablesAndOrders();
-      this.setState({
-        total: this.userTotal()
-      });
-    } else {
-      console.log("NOT WORKING :(");
+    // this.props.loadTablesAndOrders();
+    if (!!this.props.user) {
+      fetch(`${USERS_URL}/${this.props.user.id}`)
+      .then(res => res.json())
+      .then(userData => {
+        this.setState({
+          total: userData.personal_total
+        });
+        this.props.setWallet(userData)
+      })
     }
-
   }
 
   generateOrders = () => {
@@ -55,7 +56,7 @@ class Home extends Component {
       { !this.props.user ?
       <div className="row">
         <div className="col-6"><Login /></div>
-        <div className="col-6"><Signup /></div>
+        <div className="col-6"><Signup loadTablesAndOrders={this.props.loadTablesAndOrders}/></div>
       </div>
       :
       <div className="row justify-content-center">

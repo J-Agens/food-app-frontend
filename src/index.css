@@ -20,11 +20,13 @@ code {
   margin-top: 5px;
   height: 300px;
   background-color: #dbdbdb;
+  overflow-y: scroll;
 }
 
 #orders-served {
   height: 300px;
   background-color: #dbdbdb;
+  overflow-y: scroll;
 }
 
 #shelf {
