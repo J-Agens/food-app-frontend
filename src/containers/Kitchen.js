@@ -49,7 +49,7 @@ class Kitchen extends Component {
     })
 
     return placedOrders.map(order => {
-      return <ListGroup.Item className="order-board-item" onClick={() => this.handleOrderSelection(order)} key={order.id}>{order.item_name} - {order.customer} - Table #{order.table_id}</ListGroup.Item>
+      return <ListGroup.Item style={ !!this.state.selectedOrder && order.id === this.state.selectedOrder.id ? { backgroundColor: "#49E7A5" } : null } className="order-board-item" onClick={() => this.handleOrderSelection(order)} key={order.id}>{order.item_name} - {order.customer} - Table #{order.table_id}</ListGroup.Item>
     })
   }
 

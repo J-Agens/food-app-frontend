@@ -315,6 +315,11 @@ body {
   /* color: #F5FFFA; */
 }
 
+.title-watermark {
+  position: fixed;
+  color: #90C4AF;
+}
+
 .start-fire {
   color: #49E7A5;
   top: auto;

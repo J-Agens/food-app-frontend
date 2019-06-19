@@ -16,49 +16,51 @@ class Signup extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    let formData = this.state;
-    let configObj = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify(formData)
-    };
+    if (this.state.username && this.state.password) {
 
-    fetch("http://localhost:3000/signup", configObj)
-      .then(res => res.json())
-      .then(user => {
-        this.props.signup(user);
-        // this.props.loadTablesAndOrders();
-      })
-      // have to log the new user in
-      .then(() => {
-        fetch('http://localhost:3000/login', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-          body: JSON.stringify({
-            user: this.state
-          })
+      let formData = this.state;
+      let configObj = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(formData)
+      };
+
+      fetch("http://localhost:3000/signup", configObj)
+        .then(res => res.json())
+        .then(user => {
+          this.props.signup(user);
+          // this.props.loadTablesAndOrders();
         })
-          .then(res => res.json())
-          .then(data => {
-            const { token, user } = data;
-            localStorage.setItem('token', token);
-            console.log("LOGIN => user: ", user);
-            this.props.login(user)
-            // this.props.dispatch({
-            //   type: LOGIN,
-            //   payload: user
-            // });
-            this.setState({ username: "", password: "" })
+        // have to log the new user in
+        .then(() => {
+          fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({
+              user: this.state
+            })
           })
-      })
+            .then(res => res.json())
+            .then(data => {
+              const { token, user } = data;
+              localStorage.setItem('token', token);
+              console.log("LOGIN => user: ", user);
+              this.props.login(user)
+              // this.props.dispatch({
+              //   type: LOGIN,
+              //   payload: user
+              // });
+              this.setState({ username: "", password: "" })
+            })
+        })
 
-
+    }
   }
 
   render() {
@@ -71,6 +73,7 @@ class Signup extends Component {
           <input className="form-control my-input" type="password" name="password" value={this.state.password} onChange={this.handleChange} placeholder="password"/>
           <input className="btn btn-secondary my-btn" type="submit" value="Sign Up"/>
         </form>
+        <p className="watermark title-watermark">Restaurant Simulator</p>
       </div>
     );
   }
