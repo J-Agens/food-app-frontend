@@ -108,7 +108,8 @@ class Kitchen extends Component {
       .then(cookSession => {
         console.log("createCookSession: ", cookSession);
         if (cookSession.error) {
-          alert("NO MORE ROOM ON THE STOVE");
+          alert(cookSession.error)
+          // alert("THE STOVE IS FULL OR YOU HAVE SELECTED A DUPLICATE ORDER");
         }
         fetch("http://localhost:3000/pots")
           .then(res => res.json())

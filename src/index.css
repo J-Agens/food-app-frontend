@@ -129,7 +129,7 @@ body {
   border: 1px solid #87FFCD;
   padding-left: 0;
   padding-right: 0;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 #order-board {
