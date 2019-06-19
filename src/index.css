@@ -465,3 +465,11 @@ body {
   border: none;
   border-color: #90C4AF;
 }
+
+.progress {
+  margin-top: 5%;
+}
+
+.progress-bar {
+  background-color: #90C4AF;
+}
