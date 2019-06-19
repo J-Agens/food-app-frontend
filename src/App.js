@@ -28,7 +28,8 @@ class App extends Component {
     tables: null,
     orders: null,
     recipes: null,
-    wallet: 0
+    wallet: 0,
+    fetching: true
   }
 
   componentDidMount() {
@@ -44,7 +45,9 @@ class App extends Component {
           console.log(user);
           if (!user.errors) {
             this.props.login(user);
-            this.setState({ wallet: user.wallet })
+            this.setState({ wallet: user.wallet, fetching: false })
+          } else {
+            this.setState({ fetching: false })
           }
         })
       this.loadTablesAndOrders();
@@ -239,6 +242,7 @@ class App extends Component {
     // console.log("App state table: ", this.state.table);
     console.log("APP state.tables: ", this.state.tables);
     return (
+    <div> { this.state.fetching ? null :
       <div>
       { !!this.props.user ?
       <React.Fragment>
@@ -316,7 +320,9 @@ class App extends Component {
     :
       <Home loadTablesAndOrders={this.loadTablesAndOrders} setWallet={this.setWallet}/>
     }
-  </div> // had to wrap to test login
+    </div> // had to wrap to test login
+  }
+  </div> // another div for page load correction
     );
   }
 
