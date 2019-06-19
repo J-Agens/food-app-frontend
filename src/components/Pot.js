@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUtensilSpoon, faStopCircle } from '@fortawesome/free-solid-svg-icons'
+
 
 class Pot extends Component {
 
@@ -26,14 +29,18 @@ class Pot extends Component {
 
   render() {
     return (
-      <div className="pot col-2" style={this.props.selectedCookSession && this.props.selectedCookSession.pot_id === this.props.pot.id ? {backgroundColor: "#526e9b"} : null} onDragOver={(e) => this.props.onDragOver(e)} onDrop={this.handleOnDrop}>
+      <div className="pot col-2" style={this.props.selectedCookSession && this.props.selectedCookSession.pot_id === this.props.pot.id ? {backgroundImage: "linear-gradient(#969696, #49E7A5)"} : null} onDragOver={(e) => this.props.onDragOver(e)} onDrop={this.handleOnDrop}>
 
         <h6>
-        {this.props.pot.cook_session ? this.props.pot.cook_session.recipe_name : null}
-        {this.props.pot.cook_session ? <button onClick={() => this.props.deleteCookSession(this.props.pot.cook_session.id, this.props.pot.id)}>X</button> : null}
-        {this.props.pot.cook_session ? <button className="start" onClick={() => this.props.selectCookSession(this.props.pot.cook_session, this.state.ingredients)}>Start</button> : null}
+        <p style={{fontSize: ".75em", paddingTop: "5%"}}>
+        {this.props.pot.cook_session ? this.props.pot.cook_session.recipe_name + " - ": null}
+        { this.props.pot.cook_session ? this.props.pot.cook_session.customer_name : null}
+        </p>
+        <div>
+          {this.props.pot.cook_session ? <button className="btn cancel-cook watermark pot-watermark"onClick={() => this.props.deleteCookSession(this.props.pot.cook_session.id, this.props.pot.id)}><FontAwesomeIcon icon={faStopCircle} size="2x"/></button> : null}
+          {this.props.pot.cook_session ? <button className="btn select-cook watermark pot-watermark" onClick={() => this.props.selectCookSession(this.props.pot.cook_session, this.state.ingredients)}><FontAwesomeIcon icon={faUtensilSpoon} size="2x"/></button> : null}
+        </div>
         </h6>
-        <p>{ this.props.pot.cook_session ? this.props.pot.cook_session.customer_name : null}</p>
         { this.renderIngs() }
       </div>
     )

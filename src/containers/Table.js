@@ -86,7 +86,7 @@ class Table extends Component {
           </div>
           <div className="row">
             <div className="col-3" id="menu">
-              <p className="watermark table-watermark">Menu</p>
+              <p className="watermark menu-watermark">Menu</p>
               <ListGroup varient="flush">
               { this.props.recipes ? this.generateMenu() : null }
               </ListGroup>

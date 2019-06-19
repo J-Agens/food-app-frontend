@@ -41,10 +41,10 @@ class Signup extends Component {
     return (
       <div className="home-form">
         <h3>Sign Up</h3>
-        <form className="form-inline" onSubmit={this.handleSubmit}>
-          <input className="form-control" type="text" name="username" value={this.state.username} onChange={this.handleChange} placeholder="username"/>
-          <input className="form-control" type="password" name="password" value={this.state.password} onChange={this.handleChange} placeholder="password"/>
-          <input className="btn btn-secondary" type="submit" value="Sign Up"/>
+        <form className="form-group" onSubmit={this.handleSubmit}>
+          <input className="form-control my-input" type="text" name="username" value={this.state.username} onChange={this.handleChange} placeholder="username"/>
+          <input className="form-control my-input" type="password" name="password" value={this.state.password} onChange={this.handleChange} placeholder="password"/>
+          <input className="btn btn-secondary my-btn" type="submit" value="Sign Up"/>
         </form>
       </div>
     );

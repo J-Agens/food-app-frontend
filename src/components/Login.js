@@ -44,10 +44,10 @@ class Login extends Component {
     return (
       <div className="home-form">
         <h3>Login</h3>
-        <form onSubmit={this.handleSubmit} className="form-inline">
-          <input className="form-control" type="text" name="username" value={this.state.username} onChange={this.handleChange} placeholder="username"/>
-          <input className="form-control" type="password" name="password" value={this.state.password} onChange={this.handleChange} placeholder="password"/>
-          <input className="btn btn-secondary" type="submit" value="Login"/>
+        <form onSubmit={this.handleSubmit} className="form-group">
+          <input className="form-control my-input" type="text" name="username" value={this.state.username} onChange={this.handleChange} placeholder="username"/>
+          <input className="form-control my-input" type="password" name="password" value={this.state.password} onChange={this.handleChange} placeholder="password"/>
+          <input className="btn btn-secondary my-btn" type="submit" value="Login"/>
         </form>
       </div>
     );

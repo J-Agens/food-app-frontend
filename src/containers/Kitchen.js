@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { ActionCableConsumer } from 'react-actioncable-provider';
 import { connect } from 'react-redux';
-
+import ListGroup from 'react-bootstrap/ListGroup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFireAlt } from '@fortawesome/free-solid-svg-icons'
 
@@ -49,7 +49,7 @@ class Kitchen extends Component {
     })
 
     return placedOrders.map(order => {
-      return <li onClick={() => this.handleOrderSelection(order)} key={order.id}>{order.item_name} - {order.customer} - Table #{order.table_id}</li>
+      return <ListGroup.Item className="order-board-item" onClick={() => this.handleOrderSelection(order)} key={order.id}>{order.item_name} - {order.customer} - Table #{order.table_id}</ListGroup.Item>
     })
   }
 
@@ -76,13 +76,13 @@ class Kitchen extends Component {
   stockShelf = () => {
     return this.state.shelfIngredients.map((ing, idx) => {
       return (
-        <li key={ing.name}
+        <ListGroup.Item className={this.state.selectedCookSession ? "shelf-ingredient draggable-ing" : "shelf-ingredient"} key={ing.name}
           draggable={this.state.selectedCookSession ? "true" : "false"}
           onDragStart={(e) => this.onDragStart(e, ing.name)}
           id={idx + 100}
         >
             {ing.name}
-        </li>
+        </ListGroup.Item>
       );
     });
   }
@@ -191,7 +191,7 @@ class Kitchen extends Component {
 
   renderRequiredIngredients = () => {
     return this.state.selectedCookSession["required_ingredients"].map((ing, idx) => {
-      return <li key={idx}>{ing}</li>
+      return <ListGroup.Item className="required-ingredient" key={idx}>{ing}</ListGroup.Item>
     });
   }
 
@@ -263,24 +263,23 @@ class Kitchen extends Component {
           <h4>Kitchen</h4>
           <div className="row">
             <div className="col-2" id="shelf">
-              Shelf
-              <ul>
+              <p className="watermark kitchen-watermark">Shelf</p>
+              <ListGroup varient="flush">
                 { this.stockShelf() }
-              </ul>
-              <hr />
-              Required Ingredients
+              </ListGroup>
+              {this.state.selectedCookSession ? <span className="req-ings-label">REQUIRED</span> : null}
               {this.state.selectedCookSession ? this.renderRequiredIngredients() : null}
             </div>
             <div className="col-9" id="order-board">
               <p className="watermark">Order board</p>
-              <ul>
+              <ListGroup>
                 { this.props.orders ? this.generateOrders() : null }
-              </ul>
+              </ListGroup>
             </div>
           </div>
           <div className="row">
             <div className="col-12" id="stove">
-              {this.state.selectedOrder ? <button className="btn btn-secondary watermark start-fire" onClick={this.handleStartCookClick}><FontAwesomeIcon icon={faFireAlt}/></button> : "stove" }
+              {this.state.selectedOrder ? <button className="btn btn-secondary watermark start-fire" onClick={this.handleStartCookClick}><FontAwesomeIcon icon={faFireAlt}/></button> : <p style={{ color: "#1E201F", display: "none"}}className="watermark watermark-symbol">stove</p> }
               <div className="row justify-content-center">
                 {this.state.pots ? this.renderPots() : this.renderFakePots()}
               </div>

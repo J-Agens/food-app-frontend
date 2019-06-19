@@ -53,9 +53,27 @@ body {
     color: #90C4AF;
 }
 
+.navbar-light .navbar-brand:hover {
+    color: #90C4AF;
+}
+
 .navbar-light .navbar-nav .nav-link {
   /* color: #90C4AF; */
   color: #90C4AF;
+}
+
+.dropdown-menu  {
+  /* background-color: rgb(73, 231, 165, 0.8); */
+  background-color: #90C4AF;
+  border-color: #1E201F;
+}
+
+.dropdown-item:hover {
+  background-color: rgb(245, 255, 250, 0.8);
+}
+
+.dropdown-divider {
+  border-top: 1px solid #1E201F;
 }
 
 .btn-outline-info {
@@ -104,12 +122,15 @@ body {
   color: #1E201F;
   background-color: #90C4AF;
   border: 1px solid #87FFCD;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 #order-board {
   height: 70vh;
   margin-left: 5px;
-
+  padding-left: 0;
+  padding-right: 0;
   color: #1E201F;
   background-color: #90C4AF;
   border: 1px solid #87FFCD;
@@ -126,7 +147,7 @@ body {
 }
 
 .menu-item {
-  background-color: #90C4AF;
+  background-color: rgba(144, 196, 175, 0.8);
   border: none;
   border-top: 1px solid #87FFCD;
     font-size: 2rem;
@@ -157,7 +178,7 @@ body {
 .pot {
   position: relative;
   background-color: #969696;
-  color: white;
+  color: #F5FFFA;
   min-height: 75px;
   margin: -40px 10px 0 5px;
 }
@@ -279,6 +300,20 @@ body {
   font-size: 4rem;
 }
 
+.menu-watermark {
+  transform: rotate(20deg);
+}
+
+.kitchen-watermark {
+  font-size: 4rem;
+  transform: rotate(20deg);
+}
+
+.pot-watermark {
+  font-size: 1rem;
+  /* color: #F5FFFA; */
+}
+
 .start-fire {
   color: #49E7A5;
   top: auto;
@@ -318,4 +353,114 @@ body {
   .menu-item {
     font-size: 1rem;
   }
+
+  .kitchen-watermark {
+    font-size: 2em;
+  }
+
+  .pot-watermark {
+    font-size: 1rem;
+    /* color: #F5FFFA; */
+  }
+}
+@media only screen and (max-width: 1100px) {
+  .menu-watermark {
+    font-size: 2rem;
+  }
+}
+
+.shelf-ingredient {
+  background-color: rgba(144, 196, 175, 0.8);
+  border: 1px solid #49E7A5;
+}
+
+.draggable-ing {
+  cursor: grab;
+  text-shadow:
+		-1px -1px 0 #F5FFFA,
+		1px -1px 0 #F5FFFA,
+		-1px 1px 0 #F5FFFA,
+		1px 1px 0 #F5FFFA;
+}
+
+.draggable-ing:hover {
+  color: #49E7A5;
+}
+
+.required-ingredient {
+  background-color: rgba(144, 196, 175, 0.8);
+  border: 1px solid #49E7A5;
+  border-bottom: none;
+
+}
+
+.order-board-item {
+  background-color: rgba(144, 196, 175, 0.8);
+  /* border: 1px solid #49E7A5; */
+  border: none;
+}
+
+.order-board-item:hover {
+  background-color: rgba(73, 231, 165, 0.8);
+  /* border: 1px solid #49E7A5; */
+  border: none;
+}
+
+.req-ings-label {
+  padding-left: 15px;
+  color: #1E201F;
+}
+
+.select-cook {
+  background-color: transparent;
+  border: none;
+}
+
+.cancel-cook {
+  background-color: transparent;
+  border: none;
+  top: auto;
+  left: 5%;
+  bottom: 5%;
+  right: auto;
+}
+
+.select-cook:hover {
+  color: #1E201F;
+}
+
+.cancel-cook:hover {
+  color: #1E201F;
+}
+
+.my-input {
+  color: #1E201F;;
+  border-radius: 0;
+  background-color: #F5FFFA;
+  border: none;
+  border-bottom: 1px solid #90C4AF;
+}
+
+.my-input:focus {
+  color: #1E201F;;
+  border-radius: 0;
+  background-color: #F5FFFA;
+  border: none;
+  border-bottom: 1px solid #90C4AF;
+}
+
+.my-btn {
+  border-radius: 0.25;
+  color: #90C4AF;
+  background-color: #F5FFFA;
+  border: none;
+  border-color: #90C4AF;
+}
+
+.my-btn:hover {
+  border-radius: 0.25;
+  color: #F5FFFA;
+  background-color: #90C4AF;
+  border: none;
+  border-color: #90C4AF;
 }
