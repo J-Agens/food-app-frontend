@@ -30,10 +30,35 @@ class Signup extends Component {
       .then(res => res.json())
       .then(user => {
         this.props.signup(user);
-        this.props.loadTablesAndOrders();
+        // this.props.loadTablesAndOrders();
+      })
+      // have to log the new user in
+      .then(() => {
+        fetch('http://localhost:3000/login', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            user: this.state
+          })
+        })
+          .then(res => res.json())
+          .then(data => {
+            const { token, user } = data;
+            localStorage.setItem('token', token);
+            console.log("LOGIN => user: ", user);
+            this.props.login(user)
+            // this.props.dispatch({
+            //   type: LOGIN,
+            //   payload: user
+            // });
+            this.setState({ username: "", password: "" })
+          })
       })
 
-    this.setState({ username: "", password: "" })
+
   }
 
   render() {

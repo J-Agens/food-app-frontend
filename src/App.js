@@ -51,6 +51,8 @@ class App extends Component {
           }
         })
       this.loadTablesAndOrders();
+    } else { // had to add this else statement so new/logged out users can get in.
+      this.setState({fetching: false})
     }
 
 

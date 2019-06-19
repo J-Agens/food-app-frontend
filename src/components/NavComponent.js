@@ -80,8 +80,8 @@ class NavComponent extends Component {
                 </NavDropdown>
                 <Nav.Link href="/kitchen">Kitchen</Nav.Link>
               </Nav>
-              <form class="form-inline my-2 my-lg-0">
-                <button class="btn btn-outline-info my-2 my-sm-0" onClick={this.logOut}>Log Out</button>
+              <form className="form-inline my-2 my-lg-0">
+                <button className="btn btn-outline-info my-2 my-sm-0" onClick={this.logOut}>Log Out</button>
               </form>
             </Navbar.Collapse>
           </Container>
