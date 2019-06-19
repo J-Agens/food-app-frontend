@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { ActionCableConsumer } from 'react-actioncable-provider';
 import { connect } from 'react-redux';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 class Table extends Component {
 
@@ -22,9 +23,9 @@ class Table extends Component {
     const placedOrders = this.tableOrders().filter(order => order.served === false);
     return placedOrders.map(order => {
       if (order.user_id === this.props.user.id) {
-        return <li className="placed-order user-placed-order" onClick={() => this.handleCancelClick(order)} key={order.id}>{order.item_name}</li>
+        return <ListGroup.Item className="placed-order user-placed-order" onClick={() => this.handleCancelClick(order)} key={order.id}>{order.item_name}</ListGroup.Item>
       } else {
-        return <li className="placed-order" key={order.id}>{order.item_name}</li>
+        return <ListGroup.Item className="placed-order" key={order.id}>{order.item_name}</ListGroup.Item>
       }
     })
   }
@@ -33,16 +34,16 @@ class Table extends Component {
     const servedOrders = this.tableOrders().filter(order => order.served === true);
     return servedOrders.map(order => {
       if (order.user_id === this.props.user.id) {
-        return <li className="served-order user-served-order" key={order.id}>{order.item_name}</li>
+        return <ListGroup.Item className="served-order user-served-order" key={order.id}>{order.item_name}</ListGroup.Item>
       } else {
-        return <li className="served-order" key={order.id}>{order.item_name}</li>
+        return <ListGroup.Item className="served-order" key={order.id}>{order.item_name}</ListGroup.Item>
       }
     });
   }
 
   generateMenu = () => {
     return this.props.recipes.map(rec => {
-      return <li className="menu-item" onClick={this.handleClick} key={rec.id}>{rec.name}</li>
+      return <ListGroup.Item className="menu-item" onClick={this.handleClick} key={rec.id}>{rec.name}</ListGroup.Item>
     })
   }
 
@@ -85,25 +86,27 @@ class Table extends Component {
           </div>
           <div className="row">
             <div className="col-3" id="menu">
-              <p>Menu</p>
-              <ul>
+              <p className="watermark table-watermark">Menu</p>
+              <ListGroup varient="flush">
               { this.props.recipes ? this.generateMenu() : null }
-              </ul>
+              </ListGroup>
             </div>
             <div className="col-9">
               <div className="container">
                 <div className="row">
                   <div className="col-12" id="orders-served">
-                  Orders Served
+                  <p className="watermark table-watermark">Orders Served</p>
+                  <ListGroup>
                   { this.props.orders ? this.generateServedOrders() : null }
+                  </ListGroup>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-12" id="orders-placed">
-                  <p>Orders Placed</p>
-                  <ul>
+                  <p className="watermark table-watermark">Orders Placed</p>
+                  <ListGroup>
                   { this.props.orders ? this.generatePlacedOrders() : null }
-                  </ul>
+                  </ListGroup>
                   </div>
                 </div>
               </div>

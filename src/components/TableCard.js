@@ -72,7 +72,7 @@ class TableCard extends Component {
   generateUsersAtTable = () => {
     return this.state.usersAtTable.map((user, idx) => {
       if (user === this.props.user.username) {
-        return <ListGroup.Item className="tablecard-li user-tablecard-li" key={idx}><FontAwesomeIcon icon={faUser} /> {"   " + user}</ListGroup.Item>
+        return <ListGroup.Item className="tablecard-li user-tablecard-li" key={idx}><FontAwesomeIcon className="user-fa-user" icon={faUser} /> {"   " + user}</ListGroup.Item>
       } else {
         return <ListGroup.Item className="tablecard-li" key={idx}><FontAwesomeIcon icon={faUser} />{"   " + user}</ListGroup.Item>
       }

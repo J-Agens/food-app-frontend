@@ -2,6 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { ActionCableConsumer } from 'react-actioncable-provider';
 import { connect } from 'react-redux';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFireAlt } from '@fortawesome/free-solid-svg-icons'
+
 import Pot from '../components/Pot';
 const BASE_URL = "http://localhost:3000/";
 const COOK_SESSIONS_URL = BASE_URL + "cook_sessions";
@@ -269,7 +272,7 @@ class Kitchen extends Component {
               {this.state.selectedCookSession ? this.renderRequiredIngredients() : null}
             </div>
             <div className="col-9" id="order-board">
-              <p>Order board</p>
+              <p className="watermark">Order board</p>
               <ul>
                 { this.props.orders ? this.generateOrders() : null }
               </ul>
@@ -277,7 +280,7 @@ class Kitchen extends Component {
           </div>
           <div className="row">
             <div className="col-12" id="stove">
-              {this.state.selectedOrder ? <button className="btn btn-secondary" onClick={this.handleStartCookClick}>Start Cook</button> : "stove" }
+              {this.state.selectedOrder ? <button className="btn btn-secondary watermark start-fire" onClick={this.handleStartCookClick}><FontAwesomeIcon icon={faFireAlt}/></button> : "stove" }
               <div className="row justify-content-center">
                 {this.state.pots ? this.renderPots() : this.renderFakePots()}
               </div>

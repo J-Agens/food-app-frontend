@@ -58,7 +58,7 @@ class NavComponent extends Component {
         </form>
         </div>
       </nav> */}
-        <Navbar bg="light" varient="light" expand="lg">
+        <Navbar expand="lg">
           <Container>
             <Navbar.Brand>{this.props.user.username}</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
