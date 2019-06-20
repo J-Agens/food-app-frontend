@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { LOGOUT } from '../actions/types';
 import { Navbar, Nav, Button, FormControl, NavDropdown, Form, Container } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 class NavComponent extends Component {
 
@@ -57,7 +59,7 @@ class NavComponent extends Component {
         <Navbar expand="lg">
           <Container>
             <Navbar.Brand>{this.props.user.username}</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Toggle aria-controls="basic-navbar-nav" style={{backgroundColor: '#90C4AF'}}/>
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
                 <Nav.Link href="/">Home</Nav.Link>
