@@ -14,7 +14,10 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    // this.props.loadTablesAndOrders();
+    // Added conditional to fix bug that would occur when a user tries to
+    // pay bill upon initial login
+    this.props.loadTablesAndOrders();
+
     if (!!this.props.user) {
       fetch(`${USERS_URL}/${this.props.user.id}`)
       .then(res => res.json())
