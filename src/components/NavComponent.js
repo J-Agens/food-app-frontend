@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { LOGOUT } from '../actions/types';
 import { Navbar, Nav, Button, FormControl, NavDropdown, Form, Container } from 'react-bootstrap';
-
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 class NavComponent extends Component {
 
@@ -17,7 +14,6 @@ class NavComponent extends Component {
   }
 
   render() {
-    // console.log("NAVBAR PROPS: ", this.props);
     return (
       <React.Fragment>
       {/*

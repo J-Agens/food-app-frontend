@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { ActionCableConsumer } from 'react-actioncable-provider';
+// import { ActionCableConsumer } from 'react-actioncable-provider';
 import { connect } from 'react-redux';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -142,23 +142,6 @@ class Kitchen extends Component {
     this.setState({ selectedOrder: null });
   }
 
-  // renderPots = () => {
-  //   return this.state.pots.map(pot => {
-  //     return (
-  //       <Pot
-  //         key={pot.id}
-  //         pot={pot}
-  //         onDragOver={this.onDragOver}
-  //         onDrop={this.onDrop}
-  //         selectedCookSession={this.state.selectedCookSession}
-  //         selectCookSession={this.selectCookSession}
-  //         selectedIngredients={this.selectedIngredients}
-  //         deleteCookSession={this.deleteCookSession}/>
-  //     )
-  //   })
-  // }
-
-  // TRY TO IMPLEMENT LATER
   renderPots = () => {
     let potsArr = this.state.pots.map(pot => {
       return (

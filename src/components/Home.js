@@ -34,7 +34,7 @@ class Home extends Component {
     const userOrders = this.props.orders.filter(ord => ord.user_id === this.props.user.id);
     return userOrders.map(order => {
       // return <li style={order.served ? {color: "green"} : {color: "black"}}key={order.id}>{order.item_name} - ${order.price}</li>
-      return <ListGroup.Item className="home-order" style={order.served ? {color: "#49E7A5", backgroundColor: "#90C4AF"} : {color: "#1E201F;"}} key={order.id}>{order.item_name} - ${order.price}</ListGroup.Item>
+      return <ListGroup.Item className="home-order" style={order.served ? {color: "#49E7A5", backgroundColor: "#90C4AF"} : {color: "#1E201F"}} key={order.id}>{order.item_name} - ${order.price}</ListGroup.Item>
     });
   }
 
