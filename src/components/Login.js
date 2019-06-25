@@ -34,7 +34,7 @@ class Login extends Component {
           console.log("LOGIN => user: ", user);
           this.props.login(user)
         } else {
-          console.log("DATA (likely errors): " data);
+          console.log("DATA (likely errors): ", data);
         }
 
         // this.props.dispatch({
