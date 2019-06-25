@@ -26,12 +26,17 @@ class Login extends Component {
         user: this.state
       })
     })
-      .then(res => res.json())
+      // .then(res => res.json())
       .then(data => {
-        const { token, user } = data;
-        localStorage.setItem('token', token);
-        console.log("LOGIN => user: ", user);
-        this.props.login(user)
+        if (!!data.user) {
+          const { token, user } = data;
+          localStorage.setItem('token', token);
+          console.log("LOGIN => user: ", user);
+          this.props.login(user)
+        } else {
+          console.log("DATA (likely errors): " data);
+        }
+
         // this.props.dispatch({
         //   type: LOGIN,
         //   payload: user
