@@ -11,7 +11,7 @@ import { Provider } from 'react-redux'
 import store from './store'
 
 ReactDOM.render(
-  <ActionCableProvider url={"ws://localhost:3000/cable"}>
+  <ActionCableProvider url={"wss://cryptic-scrubland-43079.herokuapp.com/cable"}>
     <Router>
       <Provider store={store}>
         <App />
