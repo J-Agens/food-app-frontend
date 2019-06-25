@@ -7,7 +7,7 @@ class Pot extends Component {
 
   state = {
     ingredients: [],
-    cookSession: null // not being used yet
+    cookSession: null
   }
 
   handleOnDrop = (e) => {
@@ -22,9 +22,6 @@ class Pot extends Component {
   }
 
   renderIngs = () => {
-    // return this.state.ingredients.map((ing, idx) => {
-    //   return <span key={idx} className="tiny">{ing.slice(0, 3)}|</span>
-    // });
     return <ProgressBar animated now={(this.state.ingredients.length / 4) * 100}/>
   }
 

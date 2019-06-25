@@ -9,7 +9,7 @@ class Table extends Component {
     this.props.loadTablesAndOrders();
   }
 
-  // Had to make orders the single source of truth for multiple tables ironically
+  // Made orders the single source of truth for multiple tables
   tableOrders = () => {
     return this.props.orders.filter(order => order.table_id === this.props.table.id);
   }
@@ -52,7 +52,6 @@ class Table extends Component {
     if (this.props.wallet < 0) {
       this.props.history.push("/kitchen")
     } else {
-      // this.props.history.push("/kitchen")
       this.props.placeOrder({
         itemName: e.target.textContent,
         tableId: this.props.table.id
@@ -61,25 +60,8 @@ class Table extends Component {
   }
 
   render() {
-    console.log("TABLE PROPS: ", this.props);
-    // , table_id: this.props.match.params.tableId
     return (
       <Fragment>
-        {/*<ActionCableConsumer
-          channel={{channel: "TablesChannel"}}
-          onReceived={(order) => {
-            console.log("order was served", order);
-            this.props.serveOrderToTable(order);
-          }}
-        /> */}
-      {/*  <ActionCableConsumer
-          channel={{channel: "OrderBoardChannel"}}
-          onReceived={(order) => {
-            console.log('order was recieved', order);
-            this.props.postOrderToTable(order);
-            // this.props.loadTablesAndOrders();
-          }}
-        /> */}
         <div className="container">
           <div className="row">
             <h3>Table {this.props.table ? this.props.table.id : null}</h3>

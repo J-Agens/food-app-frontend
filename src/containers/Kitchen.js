@@ -229,20 +229,6 @@ class Kitchen extends Component {
     }
     return (
       <Fragment>
-        {/*<ActionCableConsumer
-          channel={{channel: "OrderBoardChannel"}}
-          onReceived={(order) => {
-            console.log('order was recieved', order);
-            this.props.postOrderToBoard(order)
-          }}
-        /> */}
-      {/*<ActionCableConsumer
-          channel={{channel: "TablesChannel"}}
-          onReceived={(order) => {
-            console.log("order was served", order);
-            this.props.unpinOrderFromBoard(order);
-          }}
-        /> */}
         <div className="container">
           <h4>Kitchen</h4>
           <div className="row">

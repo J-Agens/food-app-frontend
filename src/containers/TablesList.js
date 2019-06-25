@@ -1,15 +1,5 @@
 import React, { Component } from 'react'
 import TableCard from '../components/TableCard';
-// // TRANSFERED FROM TABLECARD
-// Array.prototype.unique = function() {
-//     var arr = [];
-//     for(var i = 0; i < this.length; i++) {
-//         if(!arr.includes(this[i])) {
-//             arr.push(this[i]);
-//         }
-//     }
-//     return arr;
-// }
 
 class TablesList extends Component {
 

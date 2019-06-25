@@ -79,11 +79,7 @@ class TableCard extends Component {
     });
   }
 
-  // SINGLE SOURCE OF TRUTH SHOULD BE ORDERS
   addUserByOrder = (order) => {
-    // let customers = this.props.table.active_users_at_table.map(user => user.username);
-    // console.log("CUSTOMERS: ", customers);
-    // console.log("tableActiveUsers() => ", this.tableActiveUsers());
     if (!this.state.usersAtTable.includes(order.customer) && order.table_id === this.props.table.id) {
       this.setState(prevState => {
         return {
