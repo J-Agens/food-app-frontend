@@ -26,7 +26,7 @@ class Login extends Component {
         user: this.state
       })
     })
-      // .then(res => res.json())
+      .then(res => res.json())
       .then(data => {
         if (!!data.user) {
           const { token, user } = data;
