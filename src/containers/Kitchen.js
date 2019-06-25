@@ -160,7 +160,7 @@ class Kitchen extends Component {
     const numMissing = (3 - this.state.pots.length);
     let fakes = [];
     for (var i = 0; i < numMissing; i++) {
-      fakes.push(<div className="col-2 pot"></div>);
+      fakes.push(<div key={i + 900} className="col-2 pot"></div>);
     }
     return potsArr.concat(fakes);
   }
