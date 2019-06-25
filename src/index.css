@@ -66,7 +66,7 @@ body {
   /* color: #90C4AF; */
   color: #49E7A5;
 }
-/* 
+/*
 .hamburger {
   background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(144, 196, 175, 1)'");
   background-color: #90C4AF;
@@ -76,9 +76,9 @@ body {
   border-radius: 10%;
 } */
 
-.navbar-toggler {
+/* .navbar-toggler {
   color: blue;
-}
+} */
 
 .dropdown-menu  {
   /* background-color: rgb(73, 231, 165, 0.8); */
