@@ -28,7 +28,7 @@ class Signup extends Component {
         body: JSON.stringify(formData)
       };
 
-      fetch("http://localhost:3000/signup", configObj)
+      fetch("https://cryptic-scrubland-43079.herokuapp.com/signup", configObj)
         .then(res => res.json())
         .then(user => {
           this.props.signup(user);

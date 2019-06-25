@@ -14,7 +14,7 @@ import Table from './containers/Table';
 
 import money from './prices/recipes';
 
-export const BASE_URL = "http://localhost:3000/";
+export const BASE_URL = "https://cryptic-scrubland-43079.herokuapp.com/";
 export const TABLES_URL = BASE_URL + "tables";
 const RECIPES_URL = BASE_URL + "recipes";
 const ORDERS_URL = BASE_URL + "orders";
@@ -35,7 +35,7 @@ class App extends Component {
   componentDidMount() {
     const token = localStorage.getItem('token');
     if (token && !this.props.user) {
-      fetch('http://localhost:3000/auto_login', {
+      fetch('https://cryptic-scrubland-43079.herokuapp.com/auto_login', {
         headers: {
           Authorization: `${token}`
         }
@@ -213,7 +213,7 @@ class App extends Component {
       },
       body: JSON.stringify(formData)
     };
-    fetch("http://localhost:3000/pay_bill", configObj)
+    fetch("https://cryptic-scrubland-43079.herokuapp.com/pay_bill", configObj)
       .then(res => res.json())
       .then(data => {
         console.log("data: ", data);
