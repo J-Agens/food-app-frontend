@@ -36,7 +36,7 @@ class Signup extends Component {
         })
         // have to log the new user in
         .then(() => {
-          fetch('http://localhost:3000/login', {
+          fetch('https://cryptic-scrubland-43079.herokuapp.comlogin', {
             method: 'POST',
             headers: {
               "Content-Type": "application/json",
