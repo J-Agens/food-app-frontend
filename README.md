@@ -41,4 +41,5 @@ Or you can create your own account by clicking the Sign Up button on the homescr
 * Clone down this repo <br /> `$ git clone <repo url>`
 * Navigate into the directory <br /> `$ cd food-app-frontend`
 * Run `$ npm install`
+* Open in your text editor and make sure network requests point to http://localhost:3000/
 * Run `$ npm start` and make sure you are running on port 3001.
