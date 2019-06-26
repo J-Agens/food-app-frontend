@@ -3,7 +3,7 @@
 This is a web application that allows users to place and "cook" orders in a virtual restaurant and see the activity of other users in real time. A user has a wallet of virtual money which can be spent by buying food and earned by cooking food.
 
 ## Background
-This project was created as a part of the immersive web development program at Flatiron School in 2019 by John Agens. My goal was to make a fun demonstration of web sockets and React that would help me sharpen my skills in order to make a more sophisticated messaging application in the future.
+This project was created as my final project of the immersive web development program at Flatiron School in 2019. My goal was to make a fun demonstration of web sockets and React that would help me sharpen my skills in order to make a more sophisticated messaging application in the future.
 
 ## Demo
 Follow [this link](https://floating-spire-37575.herokuapp.com/kitchen)
