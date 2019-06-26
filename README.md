@@ -6,7 +6,7 @@ This is a web application that allows users to place and "cook" orders in a virt
 This project was created as my final project of the immersive web development program at Flatiron School in 2019. My goal was to make a fun demonstration of web sockets and React that would help me sharpen my skills in order to make a more sophisticated messaging application in the future.
 
 ## Demo
-Follow [this link](https://floating-spire-37575.herokuapp.com/kitchen)
+Follow [this link](https://floating-spire-37575.herokuapp.com/)
 and log in with either
 
 **Username: John** <br /> *or* <br />
