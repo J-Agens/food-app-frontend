@@ -37,7 +37,7 @@ Or you can create your own account by clicking the Sign Up button on the homescr
 * Implemented client-side authorization using JSON web tokens and local storage.
 
 ## Installation
-* **Clone down and install the [backend](https://github.com/J-Agens/food-app-backend) first.**
+* **Clone down and install the [backend](https://github.com/J-Agens/food-app-backend#installatio) first.**
 * Clone down this repo <br /> `$ git clone <repo url>`
 * Navigate into the directory <br /> `$ cd food-app-frontend`
 * Run `$ npm install`
