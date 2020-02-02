@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFireAlt } from '@fortawesome/free-solid-svg-icons'
 
 import Pot from '../components/Pot';
-const BASE_URL = "https://cryptic-scrubland-43079.herokuapp.com/";
+const BASE_URL = "http://localhost:3000/";
 const COOK_SESSIONS_URL = BASE_URL + "cook_sessions";
 const DEFAULT_STATE = {
   pots: null,
@@ -22,12 +22,12 @@ class Kitchen extends Component {
   state = DEFAULT_STATE
 
   componentDidMount() {
-    fetch("https://cryptic-scrubland-43079.herokuapp.com/pots")
+    fetch("http://localhost:3000/pots")
       .then(res => res.json())
       .then(pots => {
         this.setState({ pots })
       })
-    fetch("https://cryptic-scrubland-43079.herokuapp.com/ingredients")
+    fetch("http://localhost:3000/ingredients")
       .then(res => res.json())
       .then(ings => {
         this.setState({ shelfIngredients: ings })
@@ -111,7 +111,7 @@ class Kitchen extends Component {
           alert(cookSession.error)
           // alert("THE STOVE IS FULL OR YOU HAVE SELECTED A DUPLICATE ORDER");
         }
-        fetch("https://cryptic-scrubland-43079.herokuapp.com/pots")
+        fetch("http://localhost:3000/pots")
           .then(res => res.json())
           .then(pots => {
             this.setState({ pots })
