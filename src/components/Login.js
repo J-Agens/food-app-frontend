@@ -16,7 +16,7 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    fetch('https://cryptic-scrubland-43079.herokuapp.com/login', {
+    fetch('http://localhost:3000/login', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
