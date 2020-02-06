@@ -22,6 +22,7 @@ class Kitchen extends Component {
   state = DEFAULT_STATE
 
   componentDidMount() {
+    // 3 pots and all ingredients are seeded in seeds.rb
     fetch("http://localhost:3000/pots")
       .then(res => res.json())
       .then(pots => {
@@ -53,16 +54,17 @@ class Kitchen extends Component {
     })
   }
 
+  // See stockShelf() below
   onDragStart = (ev, id) => {
     console.log('dragstart:', id);
     ev.dataTransfer.setData("id", id)
   }
-
+  // Called in Pot.js
   onDragOver = (ev) => {
     console.log("onDragOver running");
     ev.preventDefault();
   }
-
+  // Called in Pot.js
   onDrop = (ev, potId) => {
     let id = ev.dataTransfer.getData("id");
     console.log("onDrop: ", id);

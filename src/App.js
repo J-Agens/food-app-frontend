@@ -24,7 +24,6 @@ export const USERS_URL = BASE_URL + "users"
 class App extends Component {
 
   state = {
-    // table: null, // starting with just one table --> not currently in use anymore, should delete
     tables: null,
     orders: null,
     recipes: null,
@@ -87,12 +86,13 @@ class App extends Component {
     this.setState({ wallet: userObj.wallet });
   }
 
+  // Passed down as a prop to Table component, called in handleClick() function
   placeOrder = (orderObj) => {
     let formData = {
       item_name: orderObj.itemName,
       user_id: this.props.user.id,
       served: false,
-      // price: Math.floor(Math.random() * 25 + 5),
+      // money object is imported from ./prices/recipes.js
       price: money[orderObj.itemName],
       table_id: orderObj.tableId
     };
@@ -108,7 +108,8 @@ class App extends Component {
 
     fetch(ORDERS_URL, configObj)
       .then(order => {
-
+          /* New order comes back through OrderBoardChannel below which calls
+          the postOrderToBoard() function */
           console.log("ORDER!!!:",order);
       })
       .then(() => {
@@ -169,27 +170,16 @@ class App extends Component {
   }
 
   postOrderToBoard = (order) => {
+    /* setState() triggers a rerender which calls loadTablesAndOrders() to get
+    latest data, then new order is added to app state for all users. All
+    depedent components using this data will rerender as well, so data is the
+    same everywhere. */
     this.setState(prevState => {
       return {
         orders: [...prevState.orders, order]
       }
     });
   }
-
-  // unpinOrderFromBoard = (order) => {
-  //   const filtered = this.state.orders.filter(odr => odr.id !== order.id);
-  //   console.log("serveOrderToTable => filtered: ", filtered);
-  //   this.setState({ orders: [...filtered, order] });
-  // }
-
-  // postOrderToTable = (order) => {
-  //   this.setState(prevState => {
-  //     const filtered = prevState.orders.filter(ord => ord.id !== order.id);
-  //     return {
-  //       orders: [...filtered, order]
-  //     };
-  //   });
-  // }
 
   serveOrderToTable = (order) => {
     this.setState(prevState => {

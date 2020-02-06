@@ -6,7 +6,7 @@ class TablesList extends Component {
   componentDidMount() {
     this.props.loadTablesAndOrders();
   }
-
+  
   generateTableCards = () => {
     return this.props.tables.map(table => {
       return (

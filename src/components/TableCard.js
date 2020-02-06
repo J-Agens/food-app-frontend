@@ -8,6 +8,7 @@ import { faUser, faChair } from '@fortawesome/free-solid-svg-icons'
 
 import { BASE_URL, TABLES_URL } from '../App';
 
+// Monkey patch to create unique() function to draw names from orders data
 Array.prototype.unique = function() {
     var arr = [];
     for(var i = 0; i < this.length; i++) {
@@ -21,6 +22,7 @@ Array.prototype.unique = function() {
 class TableCard extends Component {
 
   state = {
+    // custom table attributes written in table.rb model
     usersAtTable: [],
     total: 0
   }
@@ -111,6 +113,7 @@ class TableCard extends Component {
             this.incrementTotalByOrder(order);
           }}
         />
+      {/* Coming in from update action in cook_sessions_controller.rb */}
        <ActionCableConsumer
           channel={{channel: "TablesChannel"}}
           onReceived={(order) => {
@@ -125,6 +128,7 @@ class TableCard extends Component {
               })
           }}
         />
+      {/* Coming in from cancel action in orders_controller.rb */}
       <ActionCableConsumer
         channel={{channel: "PayChannel"}}
         onReceived={(info) => {
