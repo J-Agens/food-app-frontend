@@ -281,7 +281,7 @@ class App extends Component {
                 tables={this.state.tables}
                 orders={this.state.orders}
               /> }
-          /> }
+          /> 
           <Route
             path="/tables/:tableId"
             render={routerProps =>
